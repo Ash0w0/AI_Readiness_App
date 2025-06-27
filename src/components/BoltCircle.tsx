@@ -16,7 +16,8 @@ export function BoltCircle() {
         src="/white_circle_360x360.png"
         alt="Powered by Bolt"
         className="w-16 h-16 opacity-80 hover:opacity-100 transition-opacity duration-300"
-        animate={{ rotate: 360 }}
+        style={{ transform: 'rotate(180deg)' }}
+        animate={{ rotate: [180, 540] }}
         transition={{
           duration: 8,
           repeat: Infinity,
