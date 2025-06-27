@@ -28,32 +28,30 @@ const introAILessons: Lesson[] = [
     title: 'What is Artificial Intelligence?',
     duration: '15 min',
     content: `
-# What is Artificial Intelligence?
-
 Artificial Intelligence (AI) is a branch of computer science that aims to create machines capable of performing tasks that typically require human intelligence. These tasks include learning, reasoning, problem-solving, perception, and language understanding.
 
-## Key Concepts
+Key Concepts
 
-### 1. Machine Intelligence
+Machine Intelligence
 AI systems are designed to mimic cognitive functions that humans associate with the human mind, such as:
-- **Learning**: Acquiring new information and skills
-- **Reasoning**: Using logic to reach conclusions
-- **Problem-solving**: Finding solutions to complex challenges
-- **Perception**: Interpreting sensory information
+• Learning: Acquiring new information and skills
+• Reasoning: Using logic to reach conclusions
+• Problem-solving: Finding solutions to complex challenges
+• Perception: Interpreting sensory information
 
-### 2. Types of AI
-- **Narrow AI (Weak AI)**: Designed for specific tasks (like voice assistants)
-- **General AI (Strong AI)**: Hypothetical AI with human-level intelligence across all domains
-- **Superintelligence**: AI that surpasses human intelligence (theoretical)
+Types of AI
+• Narrow AI (Weak AI): Designed for specific tasks (like voice assistants)
+• General AI (Strong AI): Hypothetical AI with human-level intelligence across all domains
+• Superintelligence: AI that surpasses human intelligence (theoretical)
 
-### 3. Real-World Applications
+Real-World Applications
 AI is already transforming industries:
-- **Healthcare**: Medical diagnosis and drug discovery
-- **Transportation**: Self-driving cars and traffic optimization
-- **Finance**: Fraud detection and algorithmic trading
-- **Entertainment**: Content recommendation systems
+• Healthcare: Medical diagnosis and drug discovery
+• Transportation: Self-driving cars and traffic optimization
+• Finance: Fraud detection and algorithmic trading
+• Entertainment: Content recommendation systems
 
-## Why AI Matters Today
+Why AI Matters Today
 
 AI is not just a futuristic concept—it's here now, reshaping how we work, communicate, and solve problems. Understanding AI fundamentals is crucial for professionals in every field.
     `,
@@ -64,48 +62,46 @@ AI is not just a futuristic concept—it's here now, reshaping how we work, comm
     title: 'AI vs Machine Learning vs Deep Learning',
     duration: '20 min',
     content: `
-# AI vs Machine Learning vs Deep Learning
-
 Understanding the relationship between these three concepts is fundamental to grasping modern AI.
 
-## The Hierarchy
+The Hierarchy
 
 Think of these as nested concepts:
-- **AI** is the broadest category
-- **Machine Learning** is a subset of AI
-- **Deep Learning** is a subset of Machine Learning
+• AI is the broadest category
+• Machine Learning is a subset of AI
+• Deep Learning is a subset of Machine Learning
 
-### Artificial Intelligence (AI)
+Artificial Intelligence (AI)
 The overarching field focused on creating intelligent machines. AI includes:
-- Rule-based systems
-- Expert systems
-- Machine learning algorithms
-- Natural language processing
-- Computer vision
+• Rule-based systems
+• Expert systems
+• Machine learning algorithms
+• Natural language processing
+• Computer vision
 
-### Machine Learning (ML)
+Machine Learning (ML)
 A method of achieving AI where machines learn patterns from data without being explicitly programmed for every scenario.
 
-**Key characteristics:**
-- Learns from data
-- Improves performance over time
-- Makes predictions or decisions
-- Adapts to new information
+Key characteristics:
+• Learns from data
+• Improves performance over time
+• Makes predictions or decisions
+• Adapts to new information
 
-### Deep Learning (DL)
+Deep Learning (DL)
 A specialized subset of ML that uses neural networks with multiple layers (hence "deep") to model and understand complex patterns.
 
-**Applications:**
-- Image recognition
-- Natural language processing
-- Speech recognition
-- Game playing (like AlphaGo)
+Applications:
+• Image recognition
+• Natural language processing
+• Speech recognition
+• Game playing (like AlphaGo)
 
-## Practical Examples
+Practical Examples
 
-- **AI**: A chess program that follows pre-programmed rules
-- **ML**: A spam filter that learns from examples of spam and legitimate emails
-- **DL**: A system that can identify objects in photos by learning from millions of labeled images
+• AI: A chess program that follows pre-programmed rules
+• ML: A spam filter that learns from examples of spam and legitimate emails
+• DL: A system that can identify objects in photos by learning from millions of labeled images
 
 Understanding these distinctions helps you communicate more precisely about AI technologies and their capabilities.
     `,
@@ -116,64 +112,62 @@ Understanding these distinctions helps you communicate more precisely about AI t
     title: 'AI in the Modern Workplace',
     duration: '25 min',
     content: `
-# AI in the Modern Workplace
-
 AI is revolutionizing how we work across every industry and role. Let's explore the current landscape and future implications.
 
-## Current AI Applications by Role
+Current AI Applications by Role
 
-### For Managers and Leaders
-- **Decision Support**: AI analyzes data to provide insights for strategic decisions
-- **Performance Analytics**: Track team productivity and identify improvement areas
-- **Risk Assessment**: Predict potential issues before they become problems
-- **Resource Optimization**: Allocate resources more efficiently
+For Managers and Leaders
+• Decision Support: AI analyzes data to provide insights for strategic decisions
+• Performance Analytics: Track team productivity and identify improvement areas
+• Risk Assessment: Predict potential issues before they become problems
+• Resource Optimization: Allocate resources more efficiently
 
-### For Creative Professionals
-- **Content Generation**: AI assists with writing, design, and ideation
-- **Personalization**: Create tailored content for different audiences
-- **Workflow Automation**: Streamline repetitive creative tasks
-- **Trend Analysis**: Identify emerging trends and opportunities
+For Creative Professionals
+• Content Generation: AI assists with writing, design, and ideation
+• Personalization: Create tailored content for different audiences
+• Workflow Automation: Streamline repetitive creative tasks
+• Trend Analysis: Identify emerging trends and opportunities
 
-### For Analysts and Researchers
-- **Data Processing**: Handle vast datasets quickly and accurately
-- **Pattern Recognition**: Identify trends humans might miss
-- **Predictive Modeling**: Forecast future outcomes
-- **Report Generation**: Automate routine reporting tasks
+For Analysts and Researchers
+• Data Processing: Handle vast datasets quickly and accurately
+• Pattern Recognition: Identify trends humans might miss
+• Predictive Modeling: Forecast future outcomes
+• Report Generation: Automate routine reporting tasks
 
-## Benefits of AI Integration
+Benefits of AI Integration
 
-### Efficiency Gains
-- Automate repetitive tasks
-- Reduce human error
-- Speed up complex processes
-- Enable 24/7 operations
+Efficiency Gains
+• Automate repetitive tasks
+• Reduce human error
+• Speed up complex processes
+• Enable 24/7 operations
 
-### Enhanced Decision Making
-- Process more information faster
-- Identify patterns and correlations
-- Provide data-driven recommendations
-- Reduce bias in decision-making
+Enhanced Decision Making
+• Process more information faster
+• Identify patterns and correlations
+• Provide data-driven recommendations
+• Reduce bias in decision-making
 
-### Innovation Opportunities
-- Explore new business models
-- Develop innovative products and services
-- Improve customer experiences
-- Create competitive advantages
+Innovation Opportunities
+• Explore new business models
+• Develop innovative products and services
+• Improve customer experiences
+• Create competitive advantages
 
-## Preparing for an AI-Driven Future
+Preparing for an AI-Driven Future
 
-### Essential Skills
-1. **AI Literacy**: Understanding AI capabilities and limitations
-2. **Data Interpretation**: Making sense of AI-generated insights
-3. **Human-AI Collaboration**: Working effectively with AI systems
-4. **Ethical Reasoning**: Navigating AI ethics and bias issues
-5. **Continuous Learning**: Adapting to rapidly evolving technology
+Essential Skills
+1. AI Literacy: Understanding AI capabilities and limitations
+2. Data Interpretation: Making sense of AI-generated insights
+3. Human-AI Collaboration: Working effectively with AI systems
+4. Ethical Reasoning: Navigating AI ethics and bias issues
+5. Continuous Learning: Adapting to rapidly evolving technology
 
-### Career Implications
-- Some roles will be automated
-- New roles will emerge
-- Most roles will be augmented, not replaced
-- Emphasis on uniquely human skills will increase
+Career Implications
+• Some roles will be automated
+• New roles will emerge
+• Most roles will be augmented, not replaced
+• Emphasis on uniquely human skills will increase
 
 The key is not to fear AI, but to understand and leverage it as a powerful tool for enhancing human capabilities.
     `,
@@ -295,6 +289,65 @@ export function LearningTopicPage() {
     setShowCompletionModal(false);
     window.history.pushState(null, '', '/test-selection');
     window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  const formatContent = (content: string) => {
+    return content
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line.length > 0)
+      .map((line, index) => {
+        // Main headings
+        if (line === 'Key Concepts' || line === 'The Hierarchy' || line === 'Current AI Applications by Role' || 
+            line === 'Benefits of AI Integration' || line === 'Preparing for an AI-Driven Future' || 
+            line === 'Why AI Matters Today' || line === 'Practical Examples' || line === 'Career Implications') {
+          return (
+            <h2 key={index} className="text-2xl font-semibold text-white mb-4 mt-6">
+              {line}
+            </h2>
+          );
+        }
+        
+        // Sub-headings
+        if (line === 'Machine Intelligence' || line === 'Types of AI' || line === 'Real-World Applications' ||
+            line === 'Artificial Intelligence (AI)' || line === 'Machine Learning (ML)' || line === 'Deep Learning (DL)' ||
+            line === 'For Managers and Leaders' || line === 'For Creative Professionals' || line === 'For Analysts and Researchers' ||
+            line === 'Efficiency Gains' || line === 'Enhanced Decision Making' || line === 'Innovation Opportunities' ||
+            line === 'Essential Skills' || line === 'Key characteristics:' || line === 'Applications:') {
+          return (
+            <h3 key={index} className="text-xl font-semibold text-purple-300 mb-3 mt-4">
+              {line}
+            </h3>
+          );
+        }
+        
+        // Bullet points
+        if (line.startsWith('•')) {
+          return (
+            <div key={index} className="flex items-start gap-2 mb-2">
+              <div className="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div>
+              <div className="text-gray-300">{line.slice(1).trim()}</div>
+            </div>
+          );
+        }
+        
+        // Numbered lists
+        if (/^\d+\./.test(line)) {
+          return (
+            <div key={index} className="flex items-start gap-2 mb-2">
+              <div className="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div>
+              <div className="text-gray-300">{line}</div>
+            </div>
+          );
+        }
+        
+        // Regular paragraphs
+        return (
+          <p key={index} className="text-gray-300 mb-4 leading-relaxed">
+            {line}
+          </p>
+        );
+      });
   };
 
   const completedLessons = lessons.filter(l => l.completed).length;
@@ -477,33 +530,9 @@ export function LearningTopicPage() {
                     </div>
 
                     <div className="prose prose-invert max-w-none">
-                      <div 
-                        className="text-gray-300 leading-relaxed space-y-4"
-                        dangerouslySetInnerHTML={{ 
-                          __html: currentLesson.content
-                            .split('\n')
-                            .map(line => {
-                              if (line.startsWith('# ')) {
-                                return `<h1 class="text-3xl font-bold text-white mb-6 mt-8">${line.slice(2)}</h1>`;
-                              } else if (line.startsWith('## ')) {
-                                return `<h2 class="text-2xl font-semibold text-white mb-4 mt-6">${line.slice(3)}</h2>`;
-                              } else if (line.startsWith('### ')) {
-                                return `<h3 class="text-xl font-semibold text-purple-300 mb-3 mt-4">${line.slice(4)}</h3>`;
-                              } else if (line.startsWith('- **')) {
-                                const match = line.match(/- \*\*(.*?)\*\*: (.*)/);
-                                if (match) {
-                                  return `<div class="flex items-start gap-2 mb-2"><div class="w-2 h-2 bg-purple-400 rounded-full mt-2 flex-shrink-0"></div><div><strong class="text-purple-300">${match[1]}</strong>: ${match[2]}</div></div>`;
-                                }
-                              } else if (line.startsWith('- ')) {
-                                return `<div class="flex items-start gap-2 mb-2"><div class="w-2 h-2 bg-blue-400 rounded-full mt-2 flex-shrink-0"></div><div>${line.slice(2)}</div></div>`;
-                              } else if (line.trim() === '') {
-                                return '<br>';
-                              }
-                              return `<p class="mb-4">${line}</p>`;
-                            })
-                            .join('')
-                        }}
-                      />
+                      <div className="text-gray-300 leading-relaxed space-y-4">
+                        {formatContent(currentLesson.content)}
+                      </div>
                     </div>
 
                     <div className="flex justify-end mt-8">
