@@ -26,7 +26,7 @@ export function LearningPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
@@ -45,6 +45,7 @@ export function LearningPage() {
               variant="secondary"
               onClick={handleBackToHome}
               className="flex items-center gap-2"
+              glowing={true}
             >
               <ArrowLeft className="w-5 h-5" />
               Back to Home
@@ -83,7 +84,7 @@ export function LearningPage() {
                   hover={available}
                   className={`p-6 h-full flex flex-col relative ${
                     available 
-                      ? 'cursor-pointer' 
+                      ? 'cursor-pointer glow-border' 
                       : 'opacity-50 cursor-not-allowed'
                   }`}
                   onClick={() => handleTopicClick(topic.id, available)}

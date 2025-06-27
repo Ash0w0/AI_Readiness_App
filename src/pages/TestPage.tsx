@@ -85,7 +85,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
 
   if (!currentQuestion) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
         <div className="text-white text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
           <p>Loading your personalized test...</p>
@@ -95,7 +95,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
@@ -221,6 +221,8 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             onClick={handleNextQuestion}
             disabled={selectedAnswer === -1}
             className="flex items-center gap-2"
+            glowing={selectedAnswer !== -1}
+            variant={selectedAnswer !== -1 ? "highlight" : "primary"}
           >
             {isLastQuestion ? 'Finish Test' : 'Next'}
             <ChevronRight className="w-5 h-5" />

@@ -302,7 +302,7 @@ export function LearningTopicPage() {
 
   if (!topic) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
         <div className="text-white text-center">
           <h1 className="text-2xl font-bold mb-4">Topic Not Found</h1>
           <AnimatedButton onClick={handleBack}>
@@ -314,7 +314,7 @@ export function LearningTopicPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900">
       {/* Confetti Animation */}
       <AnimatePresence>
         {showConfetti && (
@@ -362,6 +362,7 @@ export function LearningTopicPage() {
               variant="ghost"
               onClick={handleBack}
               className="flex items-center gap-2"
+              glowing={true}
             >
               <ArrowLeft className="w-5 h-5" />
               Back to Learning Hub
@@ -509,6 +510,8 @@ export function LearningTopicPage() {
                       <AnimatedButton
                         onClick={handleCompleteLesson}
                         className="flex items-center gap-2"
+                        glowing={true}
+                        variant="highlight"
                       >
                         <Play className="w-5 h-5" />
                         Complete Lesson
@@ -607,6 +610,8 @@ export function LearningTopicPage() {
                         <AnimatedButton
                           onClick={handleNextLesson}
                           className="flex items-center gap-2"
+                          glowing={true}
+                          variant="highlight"
                         >
                           {currentLessonIndex < lessons.length - 1 ? 'Next Lesson' : 'Complete Course'}
                           <CheckCircle className="w-5 h-5" />

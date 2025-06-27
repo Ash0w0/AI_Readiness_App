@@ -381,7 +381,7 @@ ${userName}`
                   onClick={() => setActiveTab(tab.id as any)}
                   className={`flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all ${
                     activeTab === tab.id
-                      ? 'bg-purple-500 text-white shadow-lg'
+                      ? 'bg-purple-500 text-white shadow-lg glow-border'
                       : 'bg-white/10 text-gray-300 hover:bg-white/20'
                   }`}
                   whileHover={{ scale: 1.02 }}
@@ -416,7 +416,7 @@ ${userName}`
                           }}
                           className={`p-4 rounded-xl border-2 transition-all ${
                             selectedTemplate === index
-                              ? 'border-purple-500 bg-purple-500/20'
+                              ? 'border-purple-500 bg-purple-500/20 glow-border'
                               : 'border-white/20 bg-white/5 hover:border-white/30'
                           }`}
                           whileHover={{ scale: 1.02 }}
@@ -456,6 +456,7 @@ ${userName}`
                             variant="secondary"
                             onClick={downloadScreenshot}
                             className="flex items-center gap-2"
+                            glowing={true}
                           >
                             <Download className="w-5 h-5" />
                             Download
@@ -477,6 +478,7 @@ ${userName}`
                         <AnimatedButton
                           variant="secondary"
                           onClick={generateVisualCard}
+                          glowing={true}
                         >
                           Generate Card
                         </AnimatedButton>
@@ -521,6 +523,7 @@ ${userName}`
                                 size="sm"
                                 onClick={() => copyToClipboard(text)}
                                 className="flex items-center gap-2"
+                                glowing={true}
                               >
                                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                                 {copied ? 'Copied!' : 'Copy'}
@@ -571,6 +574,7 @@ You can include:
                           onClick={() => copyToClipboard(customMessage)}
                           disabled={!customMessage.trim()}
                           className="flex items-center gap-2"
+                          glowing={!!customMessage.trim()}
                         >
                           {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
                           {copied ? 'Copied!' : 'Copy Message'}
@@ -602,7 +606,7 @@ You can include:
                   <motion.button
                     key={social.platform}
                     onClick={() => shareOnPlatform(social.platform)}
-                    className={`p-4 bg-white/10 rounded-xl border border-white/20 transition-all ${social.color} group flex flex-col items-center gap-2`}
+                    className={`p-4 bg-white/10 rounded-xl border border-white/20 transition-all ${social.color} group flex flex-col items-center gap-2 glow-border`}
                     whileHover={{ scale: 1.05, y: -2 }}
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
@@ -627,6 +631,7 @@ You can include:
                 variant="secondary"
                 onClick={() => copyToClipboard()}
                 className="flex items-center gap-2"
+                glowing={true}
               >
                 {copied ? <Check className="w-5 h-5" /> : <Copy className="w-5 h-5" />}
                 {copied ? 'Copied to Clipboard!' : 'Copy Default Message'}
@@ -635,6 +640,8 @@ You can include:
                 <AnimatedButton
                   onClick={downloadScreenshot}
                   className="flex items-center gap-2"
+                  glowing={true}
+                  variant="highlight"
                 >
                   <Download className="w-5 h-5" />
                   Download Achievement Card

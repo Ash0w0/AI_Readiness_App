@@ -25,7 +25,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
@@ -123,6 +123,8 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               size="lg"
               className="w-full"
               disabled={!name.trim() || !selectedRole}
+              glowing={true}
+              variant="highlight"
             >
               Start Your AI Journey
             </AnimatedButton>
