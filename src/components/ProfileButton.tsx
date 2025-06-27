@@ -45,6 +45,7 @@ export function ProfileButton() {
       transition={{ delay: 0.5 }}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
+      style={{ marginRight: '120px' }} // Add significant right margin to prevent overlap
     >
       {/* Compact Profile Button */}
       <motion.div
