@@ -92,16 +92,16 @@ export function LearningCompletionModal({
               transition={{ delay: 0.4 }}
               className="relative z-10 mb-8"
             >
-              <h2 className="text-3xl font-bold text-white mb-3">
+              <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-3">
                 🎉 Congratulations!
               </h2>
-              <p className="text-gray-300 text-lg mb-2">
+              <p className="text-gray-600 dark:text-gray-300 text-lg mb-2">
                 You've completed
               </p>
-              <p className="text-purple-300 font-semibold text-xl mb-4">
+              <p className="text-purple-600 dark:text-purple-300 font-semibold text-xl mb-4">
                 "{completedTopic}"
               </p>
-              <p className="text-gray-400">
+              <p className="text-gray-500 dark:text-gray-400">
                 You're building strong AI foundations! 
               </p>
             </motion.div>
@@ -112,12 +112,12 @@ export function LearningCompletionModal({
               transition={{ delay: 0.6 }}
               className="relative z-10 mb-8"
             >
-              <div className="bg-white/5 rounded-xl p-4 border border-white/10">
-                <h3 className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <BookOpen className="w-5 h-5 text-blue-400" />
+              <div className="bg-white/20 dark:bg-white/5 rounded-xl p-4 border border-gray-200 dark:border-white/10">
+                <h3 className="text-gray-800 dark:text-white font-semibold mb-3 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-blue-500 dark:text-blue-400" />
                   Want to learn more?
                 </h3>
-                <p className="text-gray-300 text-sm">
+                <p className="text-gray-600 dark:text-gray-300 text-sm">
                   Continue your AI journey with more advanced topics and specialized learning paths.
                 </p>
               </div>
@@ -133,6 +133,8 @@ export function LearningCompletionModal({
                 onClick={onContinueLearning}
                 className="w-full flex items-center justify-center gap-2"
                 size="lg"
+                glowing={true}
+                variant="highlight"
               >
                 <BookOpen className="w-5 h-5" />
                 Yes, Continue Learning!

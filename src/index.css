@@ -16,6 +16,12 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Light mode specific styles */
+  html:not(.dark) {
+    --tw-bg-opacity: 1;
+    background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  }
 }
 
 @layer components {
@@ -32,6 +38,76 @@
     background-size: 200% 100%;
     animation: shimmer 2s infinite;
   }
+
+  /* Running border glow effect */
+  .glow-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(139, 92, 246, 0.8),
+      rgba(59, 130, 246, 0.8),
+      rgba(16, 185, 129, 0.8),
+      transparent
+    );
+    background-size: 300% 100%;
+    border-radius: inherit;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask-composite: xor;
+    animation: glow-rotate 3s linear infinite;
+    z-index: -1;
+  }
+
+  .glow-border::after {
+    content: '';
+    position: absolute;
+    inset: 2px;
+    background: inherit;
+    border-radius: calc(1rem - 2px);
+    z-index: -1;
+  }
+
+  /* Enhanced light mode button visibility */
+  .light\:bg-white\/80 {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .light\:border-gray-200 {
+    border-color: rgb(229, 231, 235);
+  }
+
+  .light\:text-gray-800 {
+    color: rgb(31, 41, 55);
+  }
+
+  .light\:hover\:bg-white\/90:hover {
+    background-color: rgba(255, 255, 255, 0.9);
+  }
+
+  .light\:shadow-md {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .light\:text-gray-700 {
+    color: rgb(55, 65, 81);
+  }
+
+  .light\:hover\:bg-gray-100\/80:hover {
+    background-color: rgba(243, 244, 246, 0.8);
+  }
+
+  .light\:hover\:border-gray-200:hover {
+    border-color: rgb(229, 231, 235);
+  }
 }
 
 @keyframes shimmer {
@@ -40,6 +116,15 @@
   }
   100% {
     background-position: 200% 0;
+  }
+}
+
+@keyframes glow-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 300% 50%;
   }
 }
 
@@ -89,4 +174,21 @@
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
+}
+
+/* Light mode enhancements for better contrast */
+html:not(.dark) .glass-morphism {
+  @apply bg-white/60 border-gray-200/50 backdrop-blur-xl;
+}
+
+html:not(.dark) .text-white {
+  @apply text-gray-800;
+}
+
+html:not(.dark) .text-gray-300 {
+  @apply text-gray-600;
+}
+
+html:not(.dark) .text-gray-400 {
+  @apply text-gray-500;
 }

@@ -49,13 +49,13 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 pt-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-white dark:text-white mb-4">
             Welcome, {state.user?.name}!
           </h1>
-          <p className="text-xl text-gray-300 mb-2">
+          <p className="text-xl text-gray-700 dark:text-gray-300 mb-2">
             Ready to test your AI knowledge as a {state.user?.role}?
           </p>
-          <p className="text-gray-400">
+          <p className="text-gray-600 dark:text-gray-400">
             Choose your assessment type below
           </p>
         </motion.div>
@@ -74,19 +74,19 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${option.color} mb-4`}>
                     <option.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{option.title}</h3>
-                  <p className="text-gray-300">{option.description}</p>
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">{option.title}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{option.description}</p>
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <div className="flex items-center justify-between text-gray-300">
+                  <div className="flex items-center justify-between text-gray-600 dark:text-gray-300">
                     <div className="flex items-center gap-2">
                       <Clock className="w-5 h-5" />
                       <span>Duration</span>
                     </div>
                     <span className="font-semibold">{option.duration}</span>
                   </div>
-                  <div className="flex items-center justify-between text-gray-300">
+                  <div className="flex items-center justify-between text-gray-600 dark:text-gray-300">
                     <div className="flex items-center gap-2">
                       <Target className="w-5 h-5" />
                       <span>Questions</span>
@@ -96,10 +96,10 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                 </div>
 
                 <div className="mb-8 flex-grow">
-                  <h4 className="text-white font-semibold mb-3">What's included:</h4>
+                  <h4 className="text-gray-800 dark:text-white font-semibold mb-3">What's included:</h4>
                   <ul className="space-y-2">
                     {option.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-gray-300">
+                      <li key={feature} className="flex items-center gap-2 text-gray-600 dark:text-gray-300">
                         <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full flex-shrink-0" />
                         {feature}
                       </li>
@@ -111,6 +111,8 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                   <AnimatedButton
                     className="w-full"
                     onClick={() => onTestSelect(option.type)}
+                    glowing={true}
+                    variant="highlight"
                   >
                     <span>Start {option.title}</span>
                     <ArrowRight className="w-5 h-5" />
@@ -125,7 +127,7 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="text-center mt-12 text-gray-400"
+          className="text-center mt-12 text-gray-600 dark:text-gray-400"
         >
           <p>Your progress will be saved automatically. You can switch between questions freely.</p>
         </motion.div>
