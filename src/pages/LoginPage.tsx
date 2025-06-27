@@ -14,7 +14,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   const [name, setName] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
   const [showRoleDropdown, setShowRoleDropdown] = useState(false);
-  const { setUser } = useApp();
+  const { setUser, state } = useApp();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,12 +25,22 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center p-4">
+    <div className={`min-h-screen flex items-center justify-center p-4 ${
+      state.darkMode 
+        ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
+        : 'light-bg-primary'
+    }`}>
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-purple-500/20' : 'bg-white/30'
+        }`} />
+        <div className={`absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-blue-500/20' : 'bg-white/20'
+        }`} />
+        <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-indigo-500/10' : 'bg-white/10'
+        }`} />
       </div>
 
       <motion.div
@@ -50,16 +60,26 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           >
-            <Brain className="w-16 h-16 text-purple-400" />
+            <Brain className={`w-16 h-16 ${
+              state.darkMode ? 'text-purple-400' : 'text-white'
+            }`} />
           </motion.div>
-          <h1 className="text-4xl font-bold text-white mb-2">SkillScan AI</h1>
-          <p className="text-gray-300">Assess your AI skills and unlock your potential</p>
+          <h1 className={`text-4xl font-bold mb-2 ${
+            state.darkMode ? 'text-white' : 'text-white'
+          }`}>SkillScan AI</h1>
+          <p className={`${
+            state.darkMode ? 'text-gray-300' : 'text-white/90'
+          }`}>Assess your AI skills and unlock your potential</p>
         </motion.div>
 
-        <GlassCard className="p-8">
+        <GlassCard className={`p-8 ${
+          state.darkMode ? '' : 'card-light'
+        }`}>
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="name" className={`block text-sm font-medium mb-2 ${
+                state.darkMode ? 'text-gray-200' : 'text-gray-700'
+              }`}>
                 Your Name
               </label>
               <input
@@ -68,21 +88,31 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your full name"
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                className={`w-full px-4 py-3 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+                  state.darkMode 
+                    ? 'bg-white/10 border-white/20 text-white placeholder-gray-400' 
+                    : 'bg-white/30 border-white/40 text-gray-800 placeholder-gray-600 backdrop-blur-sm'
+                }`}
                 required
               />
             </div>
 
             <div className="relative">
-              <label htmlFor="role" className="block text-sm font-medium text-gray-200 mb-2">
+              <label htmlFor="role" className={`block text-sm font-medium mb-2 ${
+                state.darkMode ? 'text-gray-200' : 'text-gray-700'
+              }`}>
                 Current Job Role
               </label>
               <button
                 type="button"
                 onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-                className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all flex items-center justify-between"
+                className={`w-full px-4 py-3 rounded-xl border text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all flex items-center justify-between ${
+                  state.darkMode 
+                    ? 'bg-white/10 border-white/20 text-white' 
+                    : 'bg-white/30 border-white/40 text-gray-800 backdrop-blur-sm'
+                }`}
               >
-                <span className={selectedRole ? 'text-white' : 'text-gray-400'}>
+                <span className={selectedRole ? '' : (state.darkMode ? 'text-gray-400' : 'text-gray-600')}>
                   {selectedRole || 'Select your role'}
                 </span>
                 <ChevronDown className={`w-5 h-5 transition-transform ${showRoleDropdown ? 'rotate-180' : ''}`} />
@@ -93,10 +123,14 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-gray-900/95 backdrop-blur-xl border border-white/30 rounded-xl overflow-hidden z-20 max-h-60 overflow-y-auto shadow-2xl"
+                  className={`absolute top-full left-0 right-0 mt-2 rounded-xl overflow-hidden z-20 max-h-60 overflow-y-auto shadow-2xl border ${
+                    state.darkMode 
+                      ? 'bg-gray-900/95 backdrop-blur-xl border-white/30' 
+                      : 'bg-white/90 backdrop-blur-xl border-white/50'
+                  }`}
                   style={{
                     scrollbarWidth: 'thin',
-                    scrollbarColor: 'rgba(255, 255, 255, 0.3) transparent'
+                    scrollbarColor: state.darkMode ? 'rgba(255, 255, 255, 0.3) transparent' : 'rgba(0, 0, 0, 0.3) transparent'
                   }}
                 >
                   <div className="py-1">
@@ -108,7 +142,11 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           setSelectedRole(role);
                           setShowRoleDropdown(false);
                         }}
-                        className="w-full px-4 py-3 text-white text-left hover:bg-white/15 transition-colors border-none bg-transparent focus:outline-none focus:bg-white/20"
+                        className={`w-full px-4 py-3 text-left transition-colors border-none bg-transparent focus:outline-none ${
+                          state.darkMode 
+                            ? 'text-white hover:bg-white/15 focus:bg-white/20' 
+                            : 'text-gray-800 hover:bg-white/30 focus:bg-white/40'
+                        }`}
                       >
                         {role}
                       </button>
@@ -123,7 +161,6 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               size="lg"
               className="w-full"
               disabled={!name.trim() || !selectedRole}
-              glowing={true}
               variant="highlight"
             >
               Start Your AI Journey
@@ -135,7 +172,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="text-center mt-6 text-gray-400 text-sm"
+          className={`text-center mt-6 text-sm ${
+            state.darkMode ? 'text-gray-400' : 'text-white/80'
+          }`}
         >
           Discover your AI readiness level with SkillScan AI
         </motion.div>

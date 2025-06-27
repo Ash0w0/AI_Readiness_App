@@ -23,15 +23,15 @@ export function AnimatedButton({
   disabled = false,
   loading = false,
   type = 'button',
-  glowing = false
+  glowing = true // AUTO GLOW by default for buttons
 }: AnimatedButtonProps) {
   const baseClasses = 'font-medium rounded-2xl transition-all duration-200 relative overflow-hidden';
   
   const variantClasses = {
-    primary: 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl',
-    secondary: 'bg-white/10 border border-white/20 text-gray-200 hover:bg-white/20 backdrop-blur-sm',
-    ghost: 'text-gray-300 hover:bg-white/5 border border-transparent hover:border-white/10',
-    highlight: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg hover:shadow-xl'
+    primary: 'bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white shadow-lg hover:shadow-xl dark:shadow-purple-500/25 light:shadow-purple-500/30',
+    secondary: 'bg-white/10 dark:bg-white/10 light:bg-white/20 border border-white/20 dark:border-white/20 light:border-white/30 text-gray-200 dark:text-gray-200 light:text-gray-700 hover:bg-white/20 dark:hover:bg-white/20 light:hover:bg-white/30 backdrop-blur-sm',
+    ghost: 'text-gray-300 dark:text-gray-300 light:text-gray-600 hover:bg-white/5 dark:hover:bg-white/5 light:hover:bg-white/20 border border-transparent hover:border-white/10 dark:hover:border-white/10 light:hover:border-white/30',
+    highlight: 'bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white shadow-lg hover:shadow-xl dark:shadow-emerald-500/25 light:shadow-emerald-500/30'
   };
 
   const sizeClasses = {
@@ -48,7 +48,7 @@ export function AnimatedButton({
         ${variantClasses[variant]}
         ${sizeClasses[size]}
         ${disabled || loading ? 'opacity-50 cursor-not-allowed' : ''}
-        ${glowing ? 'glow-border' : ''}
+        ${glowing && !disabled && !loading ? 'glow-border' : ''}
         ${className}
       `}
       onClick={onClick}

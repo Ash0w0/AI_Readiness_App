@@ -85,8 +85,14 @@ export function TestPage({ onTestComplete }: TestPageProps) {
 
   if (!currentQuestion) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 flex items-center justify-center">
-        <div className="text-white text-center">
+      <div className={`min-h-screen flex items-center justify-center ${
+        state.darkMode 
+          ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
+          : 'light-bg-tertiary'
+      }`}>
+        <div className={`text-center ${
+          state.darkMode ? 'text-white' : 'text-white'
+        }`}>
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
           <p>Loading your personalized test...</p>
         </div>
@@ -95,11 +101,19 @@ export function TestPage({ onTestComplete }: TestPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
+    <div className={`min-h-screen p-4 ${
+      state.darkMode 
+        ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
+        : 'light-bg-tertiary'
+    }`}>
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl" />
+        <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-purple-500/20' : 'bg-white/30'
+        }`} />
+        <div className={`absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-blue-500/20' : 'bg-white/20'
+        }`} />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto">
@@ -110,21 +124,29 @@ export function TestPage({ onTestComplete }: TestPageProps) {
           className="flex items-center justify-between mb-8 pt-8"
         >
           <div>
-            <h1 className="text-2xl font-bold text-white">
+            <h1 className={`text-2xl font-bold ${
+              state.darkMode ? 'text-white' : 'text-white'
+            }`}>
               SkillScan AI Assessment
             </h1>
-            <p className="text-gray-300">
+            <p className={`${
+              state.darkMode ? 'text-gray-300' : 'text-white/90'
+            }`}>
               Question {state.currentQuestionIndex + 1} of {questions.length}
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 text-white">
+            <div className={`flex items-center gap-2 ${
+              state.darkMode ? 'text-white' : 'text-white'
+            }`}>
               <CheckCircle className="w-5 h-5" />
               <span>{answeredQuestions}/{questions.length}</span>
             </div>
-            <div className="flex items-center gap-2 text-white">
+            <div className={`flex items-center gap-2 ${
+              timeRemaining < 300 ? 'text-red-400' : (state.darkMode ? 'text-white' : 'text-white')
+            }`}>
               <Clock className="w-5 h-5" />
-              <span className={timeRemaining < 300 ? 'text-red-400' : ''}>{formatTime(timeRemaining)}</span>
+              <span>{formatTime(timeRemaining)}</span>
             </div>
           </div>
         </motion.div>
@@ -150,17 +172,29 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <GlassCard className="p-8 mb-8">
+            <GlassCard className={`p-8 mb-8 ${
+              state.darkMode ? '' : 'card-light'
+            }`}>
               <div className="mb-6">
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-sm font-medium">
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    state.darkMode 
+                      ? 'bg-purple-500/20 text-purple-300' 
+                      : 'bg-purple-500/30 text-purple-700'
+                  }`}>
                     {currentQuestion.category}
                   </span>
-                  <span className="px-3 py-1 bg-blue-500/20 text-blue-300 rounded-full text-sm font-medium capitalize">
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${
+                    state.darkMode 
+                      ? 'bg-blue-500/20 text-blue-300' 
+                      : 'bg-blue-500/30 text-blue-700'
+                  }`}>
                     {currentQuestion.difficulty}
                   </span>
                 </div>
-                <h2 className="text-xl font-semibold text-white leading-relaxed">
+                <h2 className={`text-xl font-semibold leading-relaxed ${
+                  state.darkMode ? 'text-white' : 'text-gray-800'
+                }`}>
                   {currentQuestion.question}
                 </h2>
               </div>
@@ -172,8 +206,12 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                     onClick={() => handleAnswerSelect(index)}
                     className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
                       selectedAnswer === index
-                        ? 'border-purple-500 bg-purple-500/20 text-white'
-                        : 'border-white/20 bg-white/5 text-gray-300 hover:border-white/30 hover:bg-white/10'
+                        ? (state.darkMode 
+                            ? 'border-purple-500 bg-purple-500/20 text-white' 
+                            : 'border-purple-600 bg-purple-500/30 text-gray-800 glow-border')
+                        : (state.darkMode 
+                            ? 'border-white/20 bg-white/5 text-gray-300 hover:border-white/30 hover:bg-white/10' 
+                            : 'border-white/30 bg-white/10 text-gray-700 hover:border-white/40 hover:bg-white/20')
                     }`}
                     whileHover={{ scale: 1.01 }}
                     whileTap={{ scale: 0.99 }}
@@ -181,8 +219,10 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                     <div className="flex items-center gap-3">
                       <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
                         selectedAnswer === index
-                          ? 'border-purple-500 bg-purple-500'
-                          : 'border-gray-400'
+                          ? (state.darkMode 
+                              ? 'border-purple-500 bg-purple-500' 
+                              : 'border-purple-600 bg-purple-600')
+                          : (state.darkMode ? 'border-gray-400' : 'border-gray-500')
                       }`}>
                         {selectedAnswer === index && (
                           <div className="w-2 h-2 bg-white rounded-full" />
@@ -208,12 +248,15 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             onClick={handlePreviousQuestion}
             disabled={state.currentQuestionIndex === 0}
             className="flex items-center gap-2"
+            glowing={false}
           >
             <ChevronLeft className="w-5 h-5" />
             Previous
           </AnimatedButton>
 
-          <div className="text-gray-400 text-sm">
+          <div className={`text-sm ${
+            state.darkMode ? 'text-gray-400' : 'text-white/80'
+          }`}>
             {selectedAnswer === -1 ? 'Select an answer to continue' : 'Answer selected'}
           </div>
 
@@ -221,7 +264,6 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             onClick={handleNextQuestion}
             disabled={selectedAnswer === -1}
             className="flex items-center gap-2"
-            glowing={selectedAnswer !== -1}
             variant={selectedAnswer !== -1 ? "highlight" : "primary"}
           >
             {isLastQuestion ? 'Finish Test' : 'Next'}

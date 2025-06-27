@@ -10,6 +10,7 @@ interface AppContextType {
   previousQuestion: () => void;
   finishTest: (result: TestResult) => void;
   resetTest: () => void;
+  toggleDarkMode: () => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -22,6 +23,7 @@ type Action =
   | { type: 'PREVIOUS_QUESTION' }
   | { type: 'FINISH_TEST'; payload: TestResult }
   | { type: 'RESET_TEST' }
+  | { type: 'TOGGLE_DARK_MODE' }
   | { type: 'LOAD_STATE'; payload: Partial<AppState> };
 
 const initialState: AppState = {
@@ -31,7 +33,7 @@ const initialState: AppState = {
   currentQuestionIndex: 0,
   answers: [],
   testResult: null,
-  darkMode: true, // Always dark mode
+  darkMode: true, // Default to dark mode
 };
 
 function appReducer(state: AppState, action: Action): AppState {
@@ -79,8 +81,10 @@ function appReducer(state: AppState, action: Action): AppState {
         answers: [],
         testResult: null,
       };
+    case 'TOGGLE_DARK_MODE':
+      return { ...state, darkMode: !state.darkMode };
     case 'LOAD_STATE':
-      return { ...state, ...action.payload, darkMode: true }; // Force dark mode
+      return { ...state, ...action.payload };
     default:
       return state;
   }
@@ -88,11 +92,6 @@ function appReducer(state: AppState, action: Action): AppState {
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(appReducer, initialState);
-
-  // Force dark mode on mount
-  useEffect(() => {
-    document.documentElement.classList.add('dark');
-  }, []);
 
   // Load state from localStorage on mount
   useEffect(() => {
@@ -143,6 +142,10 @@ export function AppProvider({ children }: { children: ReactNode }) {
     dispatch({ type: 'RESET_TEST' });
   };
 
+  const toggleDarkMode = () => {
+    dispatch({ type: 'TOGGLE_DARK_MODE' });
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -154,6 +157,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
         previousQuestion,
         finishTest,
         resetTest,
+        toggleDarkMode,
       }}
     >
       {children}

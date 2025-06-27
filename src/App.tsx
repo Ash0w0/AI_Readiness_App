@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AppProvider, useApp } from './context/AppContext';
 import { ThemeToggle } from './components/ThemeToggle';
 import { BoltCircle } from './components/BoltCircle';
+import { ProfileSection } from './components/ProfileSection';
 import { LoginPage } from './pages/LoginPage';
 import { TestSelectionPage } from './pages/TestSelectionPage';
 import { TestPage } from './pages/TestPage';
@@ -12,9 +13,15 @@ import { LearningTopicPage } from './pages/LearningTopicPage';
 function AppContent() {
   const { state, startTest } = useApp();
 
-  // Force dark mode
+  // Apply theme class to document
   if (typeof document !== 'undefined') {
-    document.documentElement.classList.add('dark');
+    if (state.darkMode) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+    }
   }
 
   const handleLogin = () => {
@@ -47,6 +54,7 @@ function AppContent() {
     <div className="min-h-screen">
       <ThemeToggle />
       <BoltCircle />
+      {state.user && <ProfileSection />}
       <Router>
         <Routes>
           <Route 

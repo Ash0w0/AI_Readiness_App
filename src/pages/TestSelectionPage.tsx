@@ -35,11 +35,19 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
+    <div className={`min-h-screen p-4 ${
+      state.darkMode 
+        ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
+        : 'light-bg-secondary'
+    }`}>
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl" />
+        <div className={`absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-purple-500/20' : 'bg-white/30'
+        }`} />
+        <div className={`absolute -bottom-40 -left-40 w-80 h-80 rounded-full blur-3xl ${
+          state.darkMode ? 'bg-blue-500/20' : 'bg-white/20'
+        }`} />
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto">
@@ -49,13 +57,19 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
           transition={{ duration: 0.6 }}
           className="text-center mb-12 pt-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className={`text-4xl font-bold mb-4 ${
+            state.darkMode ? 'text-white' : 'text-white'
+          }`}>
             Welcome, {state.user?.name}!
           </h1>
-          <p className="text-xl text-gray-300 mb-2">
+          <p className={`text-xl mb-2 ${
+            state.darkMode ? 'text-gray-300' : 'text-white/90'
+          }`}>
             Ready to test your AI knowledge as a {state.user?.role}?
           </p>
-          <p className="text-gray-400">
+          <p className={`${
+            state.darkMode ? 'text-gray-400' : 'text-white/80'
+          }`}>
             Choose your assessment type below
           </p>
         </motion.div>
@@ -69,24 +83,38 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
               transition={{ delay: index * 0.2, duration: 0.6 }}
               className="h-full"
             >
-              <GlassCard hover className="p-8 h-full flex flex-col" onClick={() => onTestSelect(option.type)}>
+              <GlassCard 
+                hover 
+                className={`p-8 h-full flex flex-col glow-border ${
+                  state.darkMode ? '' : 'card-light'
+                }`} 
+                onClick={() => onTestSelect(option.type)}
+              >
                 <div className="text-center mb-6">
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${option.color} mb-4`}>
                     <option.icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="text-2xl font-bold text-white mb-2">{option.title}</h3>
-                  <p className="text-gray-300">{option.description}</p>
+                  <h3 className={`text-2xl font-bold mb-2 ${
+                    state.darkMode ? 'text-white' : 'text-gray-800'
+                  }`}>{option.title}</h3>
+                  <p className={`${
+                    state.darkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>{option.description}</p>
                 </div>
 
                 <div className="space-y-4 mb-8">
-                  <div className="flex items-center justify-between text-gray-300">
+                  <div className={`flex items-center justify-between ${
+                    state.darkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
                     <div className="flex items-center gap-2">
                       <Clock className="w-5 h-5" />
                       <span>Duration</span>
                     </div>
                     <span className="font-semibold">{option.duration}</span>
                   </div>
-                  <div className="flex items-center justify-between text-gray-300">
+                  <div className={`flex items-center justify-between ${
+                    state.darkMode ? 'text-gray-300' : 'text-gray-600'
+                  }`}>
                     <div className="flex items-center gap-2">
                       <Target className="w-5 h-5" />
                       <span>Questions</span>
@@ -96,10 +124,14 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                 </div>
 
                 <div className="mb-8 flex-grow">
-                  <h4 className="text-white font-semibold mb-3">What's included:</h4>
+                  <h4 className={`font-semibold mb-3 ${
+                    state.darkMode ? 'text-white' : 'text-gray-800'
+                  }`}>What's included:</h4>
                   <ul className="space-y-2">
                     {option.features.map((feature) => (
-                      <li key={feature} className="flex items-center gap-2 text-gray-300">
+                      <li key={feature} className={`flex items-center gap-2 ${
+                        state.darkMode ? 'text-gray-300' : 'text-gray-600'
+                      }`}>
                         <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full flex-shrink-0" />
                         {feature}
                       </li>
@@ -111,7 +143,6 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                   <AnimatedButton
                     className="w-full"
                     onClick={() => onTestSelect(option.type)}
-                    glowing={true}
                     variant="highlight"
                   >
                     <span>Start {option.title}</span>
@@ -127,7 +158,9 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="text-center mt-12 text-gray-400"
+          className={`text-center mt-12 ${
+            state.darkMode ? 'text-gray-400' : 'text-white/80'
+          }`}
         >
           <p>Your progress will be saved automatically. You can switch between questions freely.</p>
         </motion.div>
