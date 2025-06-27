@@ -157,7 +157,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             </div>
 
             {/* Journey Button Container with Right Margin */}
-            <div className="pl-2">
+            <div className="mr-4">
               <AnimatedButton
                 type="submit"
                 size="lg"
