@@ -45,5 +45,5 @@ export interface AppState {
   currentQuestionIndex: number;
   answers: number[];
   testResult: TestResult | null;
-  darkMode: boolean;
+  darkMode: boolean; // Always true now
 }

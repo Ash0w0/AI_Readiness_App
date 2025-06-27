@@ -12,13 +12,9 @@ import { LearningTopicPage } from './pages/LearningTopicPage';
 function AppContent() {
   const { state, startTest } = useApp();
 
-  // Apply dark mode class to document
+  // Force dark mode
   if (typeof document !== 'undefined') {
-    if (state.darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.add('dark');
   }
 
   const handleLogin = () => {

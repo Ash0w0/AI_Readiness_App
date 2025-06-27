@@ -72,7 +72,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black p-4" data-results-page>
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4" data-results-page>
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
@@ -86,8 +86,8 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">Assessment Complete!</h1>
-          <p className="text-gray-600 dark:text-gray-300 text-lg">Here are your SkillScan AI results</p>
+          <h1 className="text-4xl font-bold text-white mb-4">Assessment Complete!</h1>
+          <p className="text-gray-300 text-lg">Here are your SkillScan AI results</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -115,30 +115,30 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.8, type: 'spring' }}
-                    className="text-6xl font-bold text-gray-800 dark:text-white mb-2"
+                    className="text-6xl font-bold text-white mb-2"
                   >
                     {Math.round(animatedScore)}%
                   </motion.div>
-                  <p className="text-gray-600 dark:text-gray-300 text-lg mb-2">
+                  <p className="text-gray-300 text-lg mb-2">
                     {result.score} out of {result.totalQuestions} correct
                   </p>
-                  <p className="text-gray-500 dark:text-gray-400">
+                  <p className="text-gray-400">
                     {getScoreMessage(result.percentage)}
                   </p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-green-500 dark:text-green-400">
+                    <div className="text-2xl font-bold text-green-400">
                       {result.strengths.length}
                     </div>
-                    <div className="text-gray-500 dark:text-gray-400 text-sm">Strengths</div>
+                    <div className="text-gray-400 text-sm">Strengths</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-orange-500 dark:text-orange-400">
+                    <div className="text-2xl font-bold text-orange-400">
                       {result.weaknesses.length}
                     </div>
-                    <div className="text-gray-500 dark:text-gray-400 text-sm">Areas to Improve</div>
+                    <div className="text-gray-400 text-sm">Areas to Improve</div>
                   </div>
                 </div>
               </GlassCard>
@@ -156,9 +156,9 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               <GlassCard className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-green-500/20 rounded-lg">
-                    <TrendingUp className="w-6 h-6 text-green-500 dark:text-green-400" />
+                    <TrendingUp className="w-6 h-6 text-green-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Your Strengths</h3>
+                  <h3 className="text-xl font-semibold text-white">Your Strengths</h3>
                 </div>
                 {result.strengths.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -168,14 +168,14 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 + index * 0.1 }}
-                        className="px-4 py-2 bg-green-500/20 text-green-600 dark:text-green-300 rounded-full text-sm font-medium"
+                        className="px-4 py-2 bg-green-500/20 text-green-300 rounded-full text-sm font-medium"
                       >
                         {strength}
                       </motion.span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 dark:text-gray-400">Keep learning to identify your strengths!</p>
+                  <p className="text-gray-400">Keep learning to identify your strengths!</p>
                 )}
               </GlassCard>
             </motion.div>
@@ -189,9 +189,9 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               <GlassCard className="p-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className="p-2 bg-orange-500/20 rounded-lg">
-                    <Target className="w-6 h-6 text-orange-500 dark:text-orange-400" />
+                    <Target className="w-6 h-6 text-orange-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Areas to Focus On</h3>
+                  <h3 className="text-xl font-semibold text-white">Areas to Focus On</h3>
                 </div>
                 {result.weaknesses.length > 0 ? (
                   <div className="flex flex-wrap gap-2">
@@ -201,14 +201,14 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.7 + index * 0.1 }}
-                        className="px-4 py-2 bg-orange-500/20 text-orange-600 dark:text-orange-300 rounded-full text-sm font-medium"
+                        className="px-4 py-2 bg-orange-500/20 text-orange-300 rounded-full text-sm font-medium"
                       >
                         {weakness}
                       </motion.span>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-gray-500 dark:text-gray-400">Great! No major weak areas identified.</p>
+                  <p className="text-gray-400">Great! No major weak areas identified.</p>
                 )}
               </GlassCard>
             </motion.div>
@@ -222,9 +222,9 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               <GlassCard className="p-6">
                 <div className="flex items-center gap-3 mb-6">
                   <div className="p-2 bg-blue-500/20 rounded-lg">
-                    <BookOpen className="w-6 h-6 text-blue-500 dark:text-blue-400" />
+                    <BookOpen className="w-6 h-6 text-blue-400" />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-800 dark:text-white">Recommended Learning</h3>
+                  <h3 className="text-xl font-semibold text-white">Recommended Learning</h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   {result.suggestedTopics.map((topic, index) => {
@@ -237,39 +237,39 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         transition={{ delay: 0.8 + index * 0.1 }}
                         className={`p-4 rounded-xl border transition-colors relative ${
                           available 
-                            ? 'bg-white/20 dark:bg-white/5 border-gray-300 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/10 cursor-pointer group' 
-                            : 'bg-gray-300/20 dark:bg-gray-600/20 border-gray-400/30 dark:border-gray-600/30 opacity-50 cursor-not-allowed'
+                            ? 'bg-white/5 border-white/10 hover:bg-white/10 cursor-pointer group' 
+                            : 'bg-gray-600/20 border-gray-600/30 opacity-50 cursor-not-allowed'
                         }`}
                         onClick={() => handleLearningClick(topic.id, available)}
                       >
                         {!available && (
                           <div className="absolute top-3 right-3">
-                            <Lock className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+                            <Lock className="w-4 h-4 text-gray-400" />
                           </div>
                         )}
                         <h4 className={`font-semibold mb-2 transition-colors ${
                           available 
-                            ? 'text-gray-800 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-300' 
-                            : 'text-gray-500 dark:text-gray-400'
+                            ? 'text-white group-hover:text-purple-300' 
+                            : 'text-gray-400'
                         }`}>
                           {topic.title}
                         </h4>
                         <p className={`text-sm mb-3 ${
-                          available ? 'text-gray-600 dark:text-gray-400' : 'text-gray-500 dark:text-gray-500'
+                          available ? 'text-gray-400' : 'text-gray-500'
                         }`}>
                           {topic.description}
                         </p>
                         <div className="flex items-center justify-between text-xs">
                           <span className={`px-2 py-1 rounded-full ${
                             available ? (
-                              topic.difficulty === 'beginner' ? 'bg-green-500/20 text-green-600 dark:text-green-300' :
-                              topic.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-600 dark:text-yellow-300' :
-                              'bg-red-500/20 text-red-600 dark:text-red-300'
-                            ) : 'bg-gray-500/20 text-gray-500'
+                              topic.difficulty === 'beginner' ? 'bg-green-500/20 text-green-300' :
+                              topic.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-300' :
+                              'bg-red-500/20 text-red-300'
+                            ) : 'bg-gray-600/20 text-gray-500'
                           }`}>
                             {topic.difficulty}
                           </span>
-                          <span className={available ? 'text-gray-600 dark:text-gray-400' : 'text-gray-500'}>
+                          <span className={available ? 'text-gray-400' : 'text-gray-500'}>
                             {available ? topic.estimatedTime : 'Available Soon'}
                           </span>
                         </div>
