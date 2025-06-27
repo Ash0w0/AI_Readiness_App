@@ -39,10 +39,11 @@ export function ProfileSection() {
 
   return (
     <motion.div
-      className="fixed top-6 right-20 z-40"
+      className="fixed top-6 right-20 z-50"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
+      style={{ position: 'fixed' }} // Ensure it stays fixed during scroll
     >
       <motion.div
         className="relative"
@@ -94,6 +95,7 @@ export function ProfileSection() {
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
               className="absolute top-full right-0 mt-2 w-80"
+              style={{ position: 'absolute', zIndex: 60 }} // Ensure dropdown stays on top
             >
               <GlassCard className="p-6">
                 {/* User Info Header */}
