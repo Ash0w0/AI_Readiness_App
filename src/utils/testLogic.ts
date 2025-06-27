@@ -88,12 +88,18 @@ function getSuggestedLearningTopics(
 ): LearningTopic[] {
   let suggested: LearningTopic[] = [];
 
-  // If overall score is low, suggest fundamentals
+  // ALWAYS include the basic AI course as the first suggestion
+  const introAI = learningTopics.find(t => t.id === 'intro-ai');
+  if (introAI) {
+    suggested.push(introAI);
+  }
+
+  // If overall score is low, suggest machine learning basics
   if (overallPercentage < 60) {
-    suggested.push(
-      learningTopics.find(t => t.id === 'intro-ai')!,
-      learningTopics.find(t => t.id === 'ml-basics')!
-    );
+    const mlBasics = learningTopics.find(t => t.id === 'ml-basics');
+    if (mlBasics && !suggested.some(s => s.id === mlBasics.id)) {
+      suggested.push(mlBasics);
+    }
   }
 
   // Add role-specific topics based on weaknesses
@@ -105,7 +111,7 @@ function getSuggestedLearningTopics(
     'Software Developer': ['ai-development', 'prompt-engineering', 'computer-vision']
   };
 
-  const roleTopics = roleTopicMapping[userRole] || ['intro-ai', 'ai-ethics'];
+  const roleTopics = roleTopicMapping[userRole] || ['ai-ethics'];
   roleTopics.forEach(topicId => {
     const topic = learningTopics.find(t => t.id === topicId);
     if (topic && !suggested.some(s => s.id === topic.id)) {
