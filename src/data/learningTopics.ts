@@ -11,7 +11,8 @@ export const learningTopics: LearningTopic[] = [
       'AI Fundamentals Course',
       'Introduction to Machine Learning',
       'AI Ethics and Principles'
-    ]
+    ],
+    available: true
   },
   {
     id: 'ml-basics',
@@ -23,7 +24,8 @@ export const learningTopics: LearningTopic[] = [
       'Machine Learning Crash Course',
       'Hands-on ML Examples',
       'ML Algorithm Comparison'
-    ]
+    ],
+    available: false
   },
   {
     id: 'data-preprocessing',
@@ -35,7 +37,8 @@ export const learningTopics: LearningTopic[] = [
       'Data Cleaning Best Practices',
       'Feature Engineering Techniques',
       'Data Visualization Tools'
-    ]
+    ],
+    available: false
   },
   {
     id: 'nlp-applications',
@@ -47,7 +50,8 @@ export const learningTopics: LearningTopic[] = [
       'NLP with Python',
       'Text Mining Techniques',
       'Chatbot Development'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-ethics',
@@ -59,7 +63,8 @@ export const learningTopics: LearningTopic[] = [
       'Ethical AI Guidelines',
       'Bias Detection and Mitigation',
       'AI Governance Frameworks'
-    ]
+    ],
+    available: false
   },
   {
     id: 'prompt-engineering',
@@ -71,7 +76,8 @@ export const learningTopics: LearningTopic[] = [
       'Prompt Engineering Guide',
       'LLM Best Practices',
       'Advanced Prompting Techniques'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-product-management',
@@ -83,7 +89,8 @@ export const learningTopics: LearningTopic[] = [
       'AI Product Strategy',
       'User Research with AI',
       'AI Feature Prioritization'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-marketing',
@@ -95,7 +102,8 @@ export const learningTopics: LearningTopic[] = [
       'Marketing Automation',
       'Customer Analytics',
       'Personalization Strategies'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-recruitment',
@@ -107,7 +115,8 @@ export const learningTopics: LearningTopic[] = [
       'AI Recruiting Tools',
       'Bias-Free Hiring',
       'Candidate Experience Optimization'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-development',
@@ -119,7 +128,8 @@ export const learningTopics: LearningTopic[] = [
       'AI Code Assistants',
       'Automated Testing with AI',
       'MLOps and Deployment'
-    ]
+    ],
+    available: false
   },
   {
     id: 'computer-vision',
@@ -131,7 +141,8 @@ export const learningTopics: LearningTopic[] = [
       'Image Processing Fundamentals',
       'Object Detection Models',
       'Computer Vision Applications'
-    ]
+    ],
+    available: false
   },
   {
     id: 'ai-strategy',
@@ -143,6 +154,7 @@ export const learningTopics: LearningTopic[] = [
       'AI Transformation Strategy',
       'Change Management for AI',
       'ROI Measurement in AI'
-    ]
+    ],
+    available: false
   }
 ];

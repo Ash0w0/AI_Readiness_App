@@ -13,7 +13,7 @@ export function BoltCircle() {
       onClick={handleClick}
     >
       <motion.img
-        src="/src/assets/white_circle_360x360.png"
+        src="/white_circle_360x360.png"
         alt="Powered by Bolt"
         className="w-16 h-16 opacity-80 hover:opacity-100 transition-opacity duration-300"
         animate={{ rotate: 360 }}

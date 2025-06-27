@@ -67,8 +67,9 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.2, duration: 0.6 }}
+              className="h-full"
             >
-              <GlassCard hover className="p-8 h-full" onClick={() => onTestSelect(option.type)}>
+              <GlassCard hover className="p-8 h-full flex flex-col" onClick={() => onTestSelect(option.type)}>
                 <div className="text-center mb-6">
                   <div className={`inline-flex p-4 rounded-2xl bg-gradient-to-r ${option.color} mb-4`}>
                     <option.icon className="w-8 h-8 text-white" />
@@ -94,25 +95,27 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                   </div>
                 </div>
 
-                <div className="mb-8">
+                <div className="mb-8 flex-grow">
                   <h4 className="text-white font-semibold mb-3">What's included:</h4>
                   <ul className="space-y-2">
                     {option.features.map((feature) => (
                       <li key={feature} className="flex items-center gap-2 text-gray-300">
-                        <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full" />
+                        <div className="w-2 h-2 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full flex-shrink-0" />
                         {feature}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                <AnimatedButton
-                  className="w-full"
-                  onClick={() => onTestSelect(option.type)}
-                >
-                  <span>Start {option.title}</span>
-                  <ArrowRight className="w-5 h-5" />
-                </AnimatedButton>
+                <div className="mt-auto">
+                  <AnimatedButton
+                    className="w-full"
+                    onClick={() => onTestSelect(option.type)}
+                  >
+                    <span>Start {option.title}</span>
+                    <ArrowRight className="w-5 h-5" />
+                  </AnimatedButton>
+                </div>
               </GlassCard>
             </motion.div>
           ))}

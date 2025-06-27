@@ -35,6 +35,7 @@ export interface LearningTopic {
   difficulty: 'beginner' | 'intermediate' | 'advanced';
   estimatedTime: string;
   resources: string[];
+  available: boolean;
 }
 
 export interface AppState {

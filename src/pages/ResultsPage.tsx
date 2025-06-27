@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Award, Target, TrendingUp, BookOpen, RotateCcw, Share2 } from 'lucide-react';
+import { Award, Target, TrendingUp, BookOpen, RotateCcw, Share2, Lock } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
+import { ShareModal } from '../components/ShareModal';
 import { useApp } from '../context/AppContext';
 
 interface ResultsPageProps {
@@ -13,6 +14,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
   const { state, resetTest } = useApp();
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const result = state.testResult;
   if (!result) return null;
@@ -58,8 +60,19 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
     onRestart();
   };
 
+  const handleLearningClick = (topicId: string, available: boolean) => {
+    if (!available) return;
+    window.history.pushState(null, '', `/learning/${topicId}`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  // Only allow intro-ai to be clickable, grey out others
+  const isTopicAvailable = (topicId: string) => {
+    return topicId === 'intro-ai';
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-black p-4" data-results-page>
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
@@ -74,7 +87,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
           className="text-center mb-12"
         >
           <h1 className="text-4xl font-bold text-white mb-4">Assessment Complete!</h1>
-          <p className="text-gray-300 text-lg">Here are your AI readiness results</p>
+          <p className="text-gray-300 text-lg">Here are your SkillScan AI results</p>
         </motion.div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -214,28 +227,55 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                   <h3 className="text-xl font-semibold text-white">Recommended Learning</h3>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
-                  {result.suggestedTopics.map((topic, index) => (
-                    <motion.div
-                      key={topic.id}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.8 + index * 0.1 }}
-                      className="p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-colors cursor-pointer"
-                    >
-                      <h4 className="font-semibold text-white mb-2">{topic.title}</h4>
-                      <p className="text-gray-400 text-sm mb-3">{topic.description}</p>
-                      <div className="flex items-center justify-between text-xs">
-                        <span className={`px-2 py-1 rounded-full ${
-                          topic.difficulty === 'beginner' ? 'bg-green-500/20 text-green-300' :
-                          topic.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-300' :
-                          'bg-red-500/20 text-red-300'
+                  {result.suggestedTopics.map((topic, index) => {
+                    const available = isTopicAvailable(topic.id);
+                    return (
+                      <motion.div
+                        key={topic.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.8 + index * 0.1 }}
+                        className={`p-4 rounded-xl border transition-colors relative ${
+                          available 
+                            ? 'bg-white/5 border-white/10 hover:bg-white/10 cursor-pointer group' 
+                            : 'bg-gray-600/20 border-gray-600/30 opacity-50 cursor-not-allowed'
+                        }`}
+                        onClick={() => handleLearningClick(topic.id, available)}
+                      >
+                        {!available && (
+                          <div className="absolute top-3 right-3">
+                            <Lock className="w-4 h-4 text-gray-400" />
+                          </div>
+                        )}
+                        <h4 className={`font-semibold mb-2 transition-colors ${
+                          available 
+                            ? 'text-white group-hover:text-purple-300' 
+                            : 'text-gray-400'
                         }`}>
-                          {topic.difficulty}
-                        </span>
-                        <span className="text-gray-400">{topic.estimatedTime}</span>
-                      </div>
-                    </motion.div>
-                  ))}
+                          {topic.title}
+                        </h4>
+                        <p className={`text-sm mb-3 ${
+                          available ? 'text-gray-400' : 'text-gray-500'
+                        }`}>
+                          {topic.description}
+                        </p>
+                        <div className="flex items-center justify-between text-xs">
+                          <span className={`px-2 py-1 rounded-full ${
+                            available ? (
+                              topic.difficulty === 'beginner' ? 'bg-green-500/20 text-green-300' :
+                              topic.difficulty === 'intermediate' ? 'bg-yellow-500/20 text-yellow-300' :
+                              'bg-red-500/20 text-red-300'
+                            ) : 'bg-gray-600/20 text-gray-500'
+                          }`}>
+                            {topic.difficulty}
+                          </span>
+                          <span className={available ? 'text-gray-400' : 'text-gray-500'}>
+                            {available ? topic.estimatedTime : 'Available Soon'}
+                          </span>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
                 </div>
               </GlassCard>
             </motion.div>
@@ -258,14 +298,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
             Take Another Test
           </AnimatedButton>
           <AnimatedButton
-            onClick={() => {
-              const text = `I just completed an AI Readiness Check and scored ${result.percentage}%! 🚀`;
-              if (navigator.share) {
-                navigator.share({ text });
-              } else if (navigator.clipboard) {
-                navigator.clipboard.writeText(text);
-              }
-            }}
+            onClick={() => setShowShareModal(true)}
             className="flex items-center gap-2"
           >
             <Share2 className="w-5 h-5" />
@@ -273,6 +306,13 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
           </AnimatedButton>
         </motion.div>
       </div>
+
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        result={result}
+        userName={state.user?.name || 'User'}
+      />
     </div>
   );
 }

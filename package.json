@@ -1,5 +1,5 @@
 {
-  "name": "ai-readiness-check",
+  "name": "skillscan-ai",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -14,7 +14,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.20.1",
-    "framer-motion": "^10.16.16"
+    "framer-motion": "^10.16.16",
+    "html2canvas": "^1.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",

@@ -111,7 +111,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
         >
           <div>
             <h1 className="text-2xl font-bold text-white">
-              AI Readiness Assessment
+              SkillScan AI Assessment
             </h1>
             <p className="text-gray-300">
               Question {state.currentQuestionIndex + 1} of {questions.length}

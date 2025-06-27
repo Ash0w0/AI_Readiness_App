@@ -6,6 +6,8 @@ import { LoginPage } from './pages/LoginPage';
 import { TestSelectionPage } from './pages/TestSelectionPage';
 import { TestPage } from './pages/TestPage';
 import { ResultsPage } from './pages/ResultsPage';
+import { LearningPage } from './pages/LearningPage';
+import { LearningTopicPage } from './pages/LearningTopicPage';
 
 function AppContent() {
   const { state, startTest } = useApp();
@@ -90,6 +92,14 @@ function AppContent() {
                 <Navigate to="/test-selection" replace />
               )
             } 
+          />
+          <Route 
+            path="/learning" 
+            element={<LearningPage />} 
+          />
+          <Route 
+            path="/learning/:topicId" 
+            element={<LearningTopicPage />} 
           />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

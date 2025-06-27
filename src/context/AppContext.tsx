@@ -95,7 +95,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // Load state from localStorage on mount
   useEffect(() => {
-    const savedState = localStorage.getItem('ai-readiness-state');
+    const savedState = localStorage.getItem('skillscan-ai-state');
     if (savedState) {
       try {
         const parsedState = JSON.parse(savedState);
@@ -108,7 +108,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
-    localStorage.setItem('ai-readiness-state', JSON.stringify(state));
+    localStorage.setItem('skillscan-ai-state', JSON.stringify(state));
   }, [state]);
 
   const setUser = (user: User) => {

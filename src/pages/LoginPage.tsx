@@ -52,7 +52,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           >
             <Brain className="w-16 h-16 text-purple-400" />
           </motion.div>
-          <h1 className="text-4xl font-bold text-white mb-2">AI Readiness Check</h1>
+          <h1 className="text-4xl font-bold text-white mb-2">SkillScan AI</h1>
           <p className="text-gray-300">Assess your AI skills and unlock your potential</p>
         </motion.div>
 
@@ -93,7 +93,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  className="absolute top-full left-0 right-0 mt-2 bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl overflow-hidden z-20 max-h-60 overflow-y-auto"
+                  className="absolute top-full left-0 right-0 mt-2 bg-gray-900/95 backdrop-blur-xl border border-white/30 rounded-xl overflow-hidden z-20 max-h-60 overflow-y-auto shadow-2xl"
                   style={{
                     scrollbarWidth: 'thin',
                     scrollbarColor: 'rgba(255, 255, 255, 0.3) transparent'
@@ -108,7 +108,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           setSelectedRole(role);
                           setShowRoleDropdown(false);
                         }}
-                        className="w-full px-4 py-3 text-white text-left hover:bg-white/10 transition-colors border-none bg-transparent focus:outline-none focus:bg-white/15"
+                        className="w-full px-4 py-3 text-white text-left hover:bg-white/15 transition-colors border-none bg-transparent focus:outline-none focus:bg-white/20"
                       >
                         {role}
                       </button>
@@ -135,7 +135,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           transition={{ delay: 0.8, duration: 0.5 }}
           className="text-center mt-6 text-gray-400 text-sm"
         >
-          Discover your AI readiness level and get personalized learning recommendations
+          Discover your AI readiness level with SkillScan AI
         </motion.div>
       </motion.div>
     </div>
