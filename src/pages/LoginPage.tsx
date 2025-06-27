@@ -159,9 +159,9 @@ export function LoginPage({ onLogin }: LoginPageProps) {
             <AnimatedButton
               type="submit"
               size="lg"
-              className="w-full"
+              className="w-full journey-button"
               disabled={!name.trim() || !selectedRole}
-              variant="highlight"
+              variant="journey"
             >
               Start Your AI Journey
             </AnimatedButton>

@@ -39,8 +39,8 @@ export function ProfileSection() {
 
   return (
     <motion.div
-      className="fixed top-6 left-6 z-50"
-      initial={{ opacity: 0, x: -20 }}
+      className="fixed top-6 right-20 z-40"
+      initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
     >
@@ -93,7 +93,7 @@ export function ProfileSection() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -10, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="absolute top-full left-0 mt-2 w-80"
+              className="absolute top-full right-0 mt-2 w-80"
             >
               <GlassCard className="p-6">
                 {/* User Info Header */}
@@ -167,7 +167,7 @@ export function ProfileSection() {
                       window.history.pushState(null, '', '/learning');
                       window.dispatchEvent(new PopStateEvent('popstate'));
                     }}
-                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 dark:bg-white/5 light:bg-white/20 border border-white/10 dark:border-white/10 light:border-white/30 hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-white/30 transition-colors text-left glow-border"
+                    className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 dark:bg-white/5 light:bg-white/20 border border-white/10 dark:border-white/10 light:border-white/30 hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-white/30 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -188,7 +188,7 @@ export function ProfileSection() {
                         window.history.pushState(null, '', '/results');
                         window.dispatchEvent(new PopStateEvent('popstate'));
                       }}
-                      className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 dark:bg-white/5 light:bg-white/20 border border-white/10 dark:border-white/10 light:border-white/30 hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-white/30 transition-colors text-left glow-border"
+                      className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 dark:bg-white/5 light:bg-white/20 border border-white/10 dark:border-white/10 light:border-white/30 hover:bg-white/10 dark:hover:bg-white/10 light:hover:bg-white/30 transition-colors text-left"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
@@ -212,6 +212,7 @@ export function ProfileSection() {
                     size="sm"
                     onClick={handleLogout}
                     className="w-full flex items-center justify-center gap-2 text-red-400 dark:text-red-400 light:text-red-600 hover:bg-red-500/10 dark:hover:bg-red-500/10 light:hover:bg-red-500/20"
+                    glowing={false}
                   >
                     <LogOut className="w-4 h-4" />
                     Sign Out

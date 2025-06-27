@@ -298,8 +298,8 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         className={`p-4 rounded-xl border transition-colors relative ${
                           available 
                             ? (state.darkMode 
-                                ? 'bg-white/5 border-white/10 hover:bg-white/10 cursor-pointer group glow-border' 
-                                : 'bg-white/20 border-white/30 hover:bg-white/30 cursor-pointer group glow-border')
+                                ? 'bg-white/5 border-white/10 hover:bg-white/10 cursor-pointer group' 
+                                : 'bg-white/20 border-white/30 hover:bg-white/30 cursor-pointer group')
                             : (state.darkMode 
                                 ? 'bg-gray-600/20 border-gray-600/30 opacity-50 cursor-not-allowed' 
                                 : 'bg-gray-500/20 border-gray-500/30 opacity-50 cursor-not-allowed')
@@ -374,7 +374,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
           <AnimatedButton
             onClick={() => setShowShareModal(true)}
             className="flex items-center gap-2"
-            variant="highlight"
+            variant="primary"
           >
             <Share2 className="w-5 h-5" />
             Share Results

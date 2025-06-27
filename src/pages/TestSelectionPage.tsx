@@ -85,7 +85,7 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
             >
               <GlassCard 
                 hover 
-                className={`p-8 h-full flex flex-col glow-border ${
+                className={`p-8 h-full flex flex-col ${
                   state.darkMode ? '' : 'card-light'
                 }`} 
                 onClick={() => onTestSelect(option.type)}
@@ -143,7 +143,7 @@ export function TestSelectionPage({ onTestSelect }: TestSelectionPageProps) {
                   <AnimatedButton
                     className="w-full"
                     onClick={() => onTestSelect(option.type)}
-                    variant="highlight"
+                    variant="primary"
                   >
                     <span>Start {option.title}</span>
                     <ArrowRight className="w-5 h-5" />

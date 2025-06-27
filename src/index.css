@@ -33,7 +33,7 @@
     animation: shimmer 2s infinite;
   }
 
-  /* Running border glow effect - AUTOMATIC for buttons */
+  /* Running border glow effect - ONLY when explicitly enabled */
   .glow-border {
     position: relative;
     overflow: hidden;
@@ -100,6 +100,55 @@
       0 0 50px rgba(59, 130, 246, 0.2),
       0 0 70px rgba(16, 185, 129, 0.1);
   }
+
+  /* Special Journey Button Styles */
+  .journey-button {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-size: 300% 300%;
+    animation: journey-gradient 4s ease infinite;
+    box-shadow: 
+      0 0 30px rgba(102, 126, 234, 0.4),
+      0 0 60px rgba(118, 75, 162, 0.3),
+      0 0 90px rgba(240, 147, 251, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(20px);
+  }
+
+  .journey-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: inherit;
+    animation: journey-shimmer 3s ease-in-out infinite;
+  }
+
+  .journey-button::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background: linear-gradient(45deg, #06b6d4, #3b82f6, #8b5cf6, #06b6d4);
+    background-size: 400% 400%;
+    border-radius: inherit;
+    z-index: -1;
+    animation: journey-border 3s linear infinite;
+    filter: blur(6px);
+  }
+
+  .journey-button:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+      0 10px 40px rgba(102, 126, 234, 0.6),
+      0 20px 80px rgba(118, 75, 162, 0.4),
+      0 30px 120px rgba(240, 147, 251, 0.3),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .journey-button:active {
+    transform: translateY(0) scale(0.98);
+  }
 }
 
 @keyframes shimmer {
@@ -128,6 +177,41 @@
   50% {
     transform: scale(1.05);
     filter: brightness(1.1);
+  }
+}
+
+@keyframes journey-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes journey-shimmer {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%) skewX(-15deg);
+    opacity: 0;
+  }
+}
+
+@keyframes journey-border {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 400% 50%;
   }
 }
 

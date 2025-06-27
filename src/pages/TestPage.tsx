@@ -208,7 +208,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                       selectedAnswer === index
                         ? (state.darkMode 
                             ? 'border-purple-500 bg-purple-500/20 text-white' 
-                            : 'border-purple-600 bg-purple-500/30 text-gray-800 glow-border')
+                            : 'border-purple-600 bg-purple-500/30 text-gray-800')
                         : (state.darkMode 
                             ? 'border-white/20 bg-white/5 text-gray-300 hover:border-white/30 hover:bg-white/10' 
                             : 'border-white/30 bg-white/10 text-gray-700 hover:border-white/40 hover:bg-white/20')
@@ -264,7 +264,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             onClick={handleNextQuestion}
             disabled={selectedAnswer === -1}
             className="flex items-center gap-2"
-            variant={selectedAnswer !== -1 ? "highlight" : "primary"}
+            variant="primary"
           >
             {isLastQuestion ? 'Finish Test' : 'Next'}
             <ChevronRight className="w-5 h-5" />
