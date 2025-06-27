@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Clock, BookOpen, CheckCircle, Play, Award, Home } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
+import { LearningCompletionModal } from '../components/LearningCompletionModal';
 import { learningTopics } from '../data/learningTopics';
 
 interface Lesson {
@@ -224,6 +225,8 @@ export function LearningTopicPage() {
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [courseCompleted, setCourseCompleted] = useState(false);
 
   const topic = learningTopics.find(t => t.id === topicId);
   const currentLesson = lessons[currentLessonIndex];
@@ -264,15 +267,34 @@ export function LearningTopicPage() {
     setShowConfetti(true);
     setTimeout(() => setShowConfetti(false), 3000);
 
-    // Move to next lesson after a delay
+    // Check if this is the last lesson
+    const isLastLesson = currentLessonIndex === lessons.length - 1;
+
+    // Move to next lesson or complete course after a delay
     setTimeout(() => {
-      if (currentLessonIndex < lessons.length - 1) {
+      if (!isLastLesson) {
         setCurrentLessonIndex(currentLessonIndex + 1);
         setShowKnowledgeCheck(false);
         setSelectedAnswer(null);
         setShowResult(false);
+      } else {
+        // Course completed - show completion modal
+        setCourseCompleted(true);
+        setShowCompletionModal(true);
       }
     }, 1500);
+  };
+
+  const handleContinueLearning = () => {
+    setShowCompletionModal(false);
+    window.history.pushState(null, '', '/learning');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  const handleGoHome = () => {
+    setShowCompletionModal(false);
+    window.history.pushState(null, '', '/test-selection');
+    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   const completedLessons = lessons.filter(l => l.completed).length;
@@ -598,6 +620,14 @@ export function LearningTopicPage() {
           </div>
         </div>
       </div>
+
+      {/* Learning Completion Modal */}
+      <LearningCompletionModal
+        isOpen={showCompletionModal}
+        onContinueLearning={handleContinueLearning}
+        onGoHome={handleGoHome}
+        completedTopic={topic?.title || ''}
+      />
     </div>
   );
 }
