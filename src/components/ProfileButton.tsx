@@ -39,16 +39,12 @@ export function ProfileButton() {
 
   return (
     <motion.div
-      className="fixed top-6 z-50"
+      className="fixed top-6 right-6 z-50"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
       onMouseEnter={() => setIsExpanded(true)}
       onMouseLeave={() => setIsExpanded(false)}
-      style={{ 
-        right: '200px', // Move much further left to avoid any overlap
-        minWidth: '120px' // Ensure minimum space
-      }}
     >
       {/* Compact Profile Button */}
       <motion.div
