@@ -156,15 +156,18 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               )}
             </div>
 
-            <AnimatedButton
-              type="submit"
-              size="lg"
-              className="w-full journey-button"
-              disabled={!name.trim() || !selectedRole}
-              variant="journey"
-            >
-              Start Your AI Journey
-            </AnimatedButton>
+            {/* Journey Button Container with Right Margin */}
+            <div className="pl-2">
+              <AnimatedButton
+                type="submit"
+                size="lg"
+                className="w-full journey-button"
+                disabled={!name.trim() || !selectedRole}
+                variant="journey"
+              >
+                Start Your AI Journey
+              </AnimatedButton>
+            </div>
           </form>
         </GlassCard>
 
