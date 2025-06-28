@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, Clock, BookOpen, CheckCircle, Play, Award, Home } from 'lucide-react';
+import { ArrowLeft, Clock, BookOpen, CheckCircle, Play, Award, Home, Lock } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
 import { LearningCompletionModal } from '../components/LearningCompletionModal';
@@ -291,6 +291,32 @@ export function LearningTopicPage() {
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
+  const handleLessonClick = (index: number) => {
+    // Check if lesson is locked
+    if (index > 0 && !lessons[index - 1].completed) {
+      // Scroll to complete lesson button
+      const completeButton = document.querySelector('[data-complete-lesson]');
+      if (completeButton) {
+        completeButton.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        // Add a subtle highlight effect
+        completeButton.classList.add('animate-pulse');
+        setTimeout(() => {
+          completeButton.classList.remove('animate-pulse');
+        }, 2000);
+      }
+      return;
+    }
+
+    setCurrentLessonIndex(index);
+    setShowKnowledgeCheck(false);
+    setSelectedAnswer(null);
+    setShowResult(false);
+  };
+
+  const isLessonLocked = (index: number) => {
+    return index > 0 && !lessons[index - 1].completed;
+  };
+
   const formatContent = (content: string) => {
     return content
       .split('\n')
@@ -431,10 +457,10 @@ export function LearningTopicPage() {
           </div>
           <div className="flex items-center gap-8">
             <div className="text-left">
-              <div className="text-white font-semibold text-xs">
+              <div className="text-white font-semibold text-sm">
                 {completedLessons} of {lessons.length} lessons completed
               </div>
-              <div className="w-32 bg-white/10 rounded-full h-2 mt-1">
+              <div className="w-48 bg-white/10 rounded-full h-2 mt-1">
                 <motion.div
                   className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full"
                   initial={{ width: 0 }}
@@ -456,51 +482,63 @@ export function LearningTopicPage() {
               <GlassCard className="p-6">
                 <h2 className="text-xl font-bold text-white mb-4">{topic.title}</h2>
                 <div className="space-y-3">
-                  {lessons.map((lesson, index) => (
-                    <motion.button
-                      key={lesson.id}
-                      onClick={() => {
-                        setCurrentLessonIndex(index);
-                        setShowKnowledgeCheck(false);
-                        setSelectedAnswer(null);
-                        setShowResult(false);
-                      }}
-                      className={`w-full text-left p-3 rounded-lg transition-all ${
-                        index === currentLessonIndex
-                          ? 'bg-purple-500/20 border border-purple-500/30'
-                          : 'bg-white/5 border border-white/10 hover:bg-white/10'
-                      }`}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                          lesson.completed
-                            ? 'bg-green-500 text-white'
-                            : index === currentLessonIndex
-                            ? 'bg-purple-500 text-white'
-                            : 'bg-white/10 text-gray-400'
-                        }`}>
-                          {lesson.completed ? (
-                            <CheckCircle className="w-4 h-4" />
-                          ) : (
-                            <span className="text-xs font-bold">{index + 1}</span>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className={`font-medium ${
-                            index === currentLessonIndex ? 'text-white' : 'text-gray-300'
+                  {lessons.map((lesson, index) => {
+                    const isLocked = isLessonLocked(index);
+                    const isCurrent = index === currentLessonIndex;
+                    
+                    return (
+                      <motion.button
+                        key={lesson.id}
+                        onClick={() => handleLessonClick(index)}
+                        className={`w-full text-left p-3 rounded-lg transition-all relative ${
+                          isCurrent
+                            ? 'bg-purple-500/20 border border-purple-500/30'
+                            : isLocked
+                            ? 'bg-gray-600/10 border border-gray-600/20 opacity-60 cursor-not-allowed'
+                            : 'bg-white/5 border border-white/10 hover:bg-white/10 cursor-pointer'
+                        }`}
+                        whileHover={!isLocked ? { scale: 1.02 } : {}}
+                        whileTap={!isLocked ? { scale: 0.98 } : {}}
+                      >
+                        {isLocked && (
+                          <div className="absolute top-2 right-2">
+                            <Lock className="w-4 h-4 text-gray-400" />
+                          </div>
+                        )}
+                        
+                        <div className="flex items-center gap-3">
+                          <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                            lesson.completed
+                              ? 'bg-green-500 text-white'
+                              : isCurrent
+                              ? 'bg-purple-500 text-white'
+                              : isLocked
+                              ? 'bg-gray-600/30 text-gray-500'
+                              : 'bg-white/10 text-gray-400'
                           }`}>
-                            {lesson.title}
+                            {lesson.completed ? (
+                              <CheckCircle className="w-4 h-4" />
+                            ) : (
+                              <span className="text-xs font-bold">{index + 1}</span>
+                            )}
                           </div>
-                          <div className="text-xs text-gray-400 flex items-center gap-1">
-                            <Clock className="w-3 h-3" />
-                            {lesson.duration}
+                          <div className="flex-1">
+                            <div className={`font-medium ${
+                              isCurrent ? 'text-white' : isLocked ? 'text-gray-500' : 'text-gray-300'
+                            }`}>
+                              {lesson.title}
+                            </div>
+                            <div className={`text-xs flex items-center gap-1 ${
+                              isLocked ? 'text-gray-600' : 'text-gray-400'
+                            }`}>
+                              <Clock className="w-3 h-3" />
+                              {lesson.duration}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </motion.button>
-                  ))}
+                      </motion.button>
+                    );
+                  })}
                 </div>
               </GlassCard>
             </motion.div>
@@ -543,6 +581,7 @@ export function LearningTopicPage() {
                         className="flex items-center gap-2"
                         glowing={true}
                         variant="highlight"
+                        data-complete-lesson
                       >
                         <Play className="w-5 h-5" />
                         Complete Lesson
