@@ -430,7 +430,7 @@ export function LearningTopicPage() {
             </AnimatedButton>
           </div>
           <div className="text-right">
-            <div className="text-white font-semibold">
+            <div className="text-white font-semibold text-sm">
               {completedLessons} of {lessons.length} lessons completed
             </div>
             <div className="w-32 bg-white/10 rounded-full h-2 mt-1">
