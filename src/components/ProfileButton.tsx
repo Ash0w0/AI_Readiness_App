@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Trophy, User, Settings, BookOpen, Target, TrendingUp, LogOut, Home } from 'lucide-react';
 import { GlassCard } from './GlassCard';
@@ -8,14 +8,43 @@ import { useApp } from '../context/AppContext';
 export function ProfileButton() {
   const { state, resetTest, setUser } = useApp();
   const [isExpanded, setIsExpanded] = useState(false);
+  const profileRef = useRef<HTMLDivElement>(null);
 
   if (!state.user) return null;
 
+  // Close profile when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (profileRef.current && !profileRef.current.contains(event.target as Node)) {
+        setIsExpanded(false);
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isExpanded]);
+
   const handleLogout = () => {
+    setIsExpanded(false);
     setUser(null);
     resetTest();
     window.history.pushState(null, '', '/');
     window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  const handleNavigation = (path: string) => {
+    setIsExpanded(false);
+    window.history.pushState(null, '', path);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  const handleProfileClick = () => {
+    setIsExpanded(!isExpanded);
   };
 
   const getInitials = (name: string) => {
@@ -39,18 +68,18 @@ export function ProfileButton() {
 
   return (
     <motion.div
+      ref={profileRef}
       className="fixed top-6 right-6 z-50"
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
     >
       {/* Compact Profile Button */}
       <motion.div
         className="relative cursor-pointer"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={handleProfileClick}
       >
         <div className="flex items-center gap-2 p-3 rounded-full backdrop-blur-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-colors">
           {/* User Initials */}
@@ -150,10 +179,7 @@ export function ProfileButton() {
                   </h4>
                   
                   <motion.button
-                    onClick={() => {
-                      window.history.pushState(null, '', '/test-selection');
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    }}
+                    onClick={() => handleNavigation('/test-selection')}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -170,10 +196,7 @@ export function ProfileButton() {
                   </motion.button>
 
                   <motion.button
-                    onClick={() => {
-                      window.history.pushState(null, '', '/learning');
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    }}
+                    onClick={() => handleNavigation('/learning')}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -191,10 +214,7 @@ export function ProfileButton() {
 
                   {state.testResult && (
                     <motion.button
-                      onClick={() => {
-                        window.history.pushState(null, '', '/results');
-                        window.dispatchEvent(new PopStateEvent('popstate'));
-                      }}
+                      onClick={() => handleNavigation('/results')}
                       className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
