@@ -12,21 +12,10 @@ export function ProfileButton() {
   if (!state.user) return null;
 
   const handleLogout = () => {
-    setIsExpanded(false); // Close profile section
     setUser(null);
     resetTest();
     window.history.pushState(null, '', '/');
     window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
-  const handleNavigation = (path: string) => {
-    setIsExpanded(false); // Close profile section
-    window.history.pushState(null, '', path);
-    window.dispatchEvent(new PopStateEvent('popstate'));
-  };
-
-  const handleProfileClick = () => {
-    setIsExpanded(!isExpanded); // Toggle profile section
   };
 
   const getInitials = (name: string) => {
@@ -54,13 +43,14 @@ export function ProfileButton() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
     >
       {/* Compact Profile Button */}
       <motion.div
         className="relative cursor-pointer"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        onClick={handleProfileClick}
       >
         <div className="flex items-center gap-2 p-3 rounded-full backdrop-blur-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-colors">
           {/* User Initials */}
@@ -91,7 +81,6 @@ export function ProfileButton() {
               transition={{ duration: 0.2 }}
               className="absolute top-full right-0 mt-2 w-80"
               style={{ zIndex: 60 }}
-              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the panel
             >
               <GlassCard className="p-6">
                 {/* User Info Header */}
@@ -161,7 +150,10 @@ export function ProfileButton() {
                   </h4>
                   
                   <motion.button
-                    onClick={() => handleNavigation('/test-selection')}
+                    onClick={() => {
+                      window.history.pushState(null, '', '/test-selection');
+                      window.dispatchEvent(new PopStateEvent('popstate'));
+                    }}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -178,7 +170,10 @@ export function ProfileButton() {
                   </motion.button>
 
                   <motion.button
-                    onClick={() => handleNavigation('/learning')}
+                    onClick={() => {
+                      window.history.pushState(null, '', '/learning');
+                      window.dispatchEvent(new PopStateEvent('popstate'));
+                    }}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -196,7 +191,10 @@ export function ProfileButton() {
 
                   {state.testResult && (
                     <motion.button
-                      onClick={() => handleNavigation('/results')}
+                      onClick={() => {
+                        window.history.pushState(null, '', '/results');
+                        window.dispatchEvent(new PopStateEvent('popstate'));
+                      }}
                       className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
