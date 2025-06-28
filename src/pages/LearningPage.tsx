@@ -2,10 +2,11 @@ import { motion } from 'framer-motion';
 import { BookOpen, ArrowLeft, Lock, Clock, Target } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
-import { learningTopics } from '../data/learningTopics';
+import { learningTopics, isTopicUnlocked } from '../data/learningTopics';
 
 export function LearningPage() {
-  const handleTopicClick = (topicId: string, available: boolean) => {
+  const handleTopicClick = (topicId: string) => {
+    const available = isTopicUnlocked(topicId);
     if (!available) return;
     window.history.pushState(null, '', `/learning/${topicId}`);
     window.dispatchEvent(new PopStateEvent('popstate'));
@@ -72,7 +73,7 @@ export function LearningPage() {
         {/* Learning Topics Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {learningTopics.map((topic, index) => {
-            const available = topic.available;
+            const available = isTopicUnlocked(topic.id);
             return (
               <motion.div
                 key={topic.id}
@@ -87,7 +88,7 @@ export function LearningPage() {
                       ? 'cursor-pointer glow-border' 
                       : 'opacity-50 cursor-not-allowed'
                   }`}
-                  onClick={() => handleTopicClick(topic.id, available)}
+                  onClick={() => handleTopicClick(topic.id)}
                 >
                   {!available && (
                     <div className="absolute top-4 right-4">
@@ -161,7 +162,7 @@ export function LearningPage() {
           transition={{ delay: 0.8 }}
           className="text-center mt-12 text-gray-400"
         >
-          <p>More learning topics will be available soon. Start with the fundamentals to build a strong foundation.</p>
+          <p>Complete courses to unlock new learning paths. Start with the fundamentals to build a strong foundation.</p>
         </motion.div>
       </div>
     </div>

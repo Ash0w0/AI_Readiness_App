@@ -25,7 +25,7 @@ export const learningTopics: LearningTopic[] = [
       'Hands-on ML Examples',
       'ML Algorithm Comparison'
     ],
-    available: false
+    available: false // Will be unlocked after email submission
   },
   {
     id: 'data-preprocessing',
@@ -158,3 +158,21 @@ export const learningTopics: LearningTopic[] = [
     available: false
   }
 ];
+
+// Function to check if a course is unlocked
+export const isTopicUnlocked = (topicId: string): boolean => {
+  if (topicId === 'intro-ai') return true; // Always available
+  
+  // Check localStorage for unlocked courses
+  const unlockedCourses = JSON.parse(localStorage.getItem('unlockedCourses') || '["intro-ai"]');
+  return unlockedCourses.includes(topicId);
+};
+
+// Function to unlock a course
+export const unlockTopic = (topicId: string): void => {
+  const unlockedCourses = JSON.parse(localStorage.getItem('unlockedCourses') || '["intro-ai"]');
+  if (!unlockedCourses.includes(topicId)) {
+    unlockedCourses.push(topicId);
+    localStorage.setItem('unlockedCourses', JSON.stringify(unlockedCourses));
+  }
+};

@@ -5,6 +5,7 @@ import { ArrowLeft, Clock, BookOpen, CheckCircle, Play, Award, Home, Lock } from
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
 import { LearningCompletionModal } from '../components/LearningCompletionModal';
+import { EmailCollectionModal } from '../components/EmailCollectionModal';
 import { learningTopics } from '../data/learningTopics';
 
 interface Lesson {
@@ -220,6 +221,7 @@ export function LearningTopicPage() {
   const [showResult, setShowResult] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showCompletionModal, setShowCompletionModal] = useState(false);
+  const [showEmailModal, setShowEmailModal] = useState(false);
   const [courseCompleted, setCourseCompleted] = useState(false);
 
   const topic = learningTopics.find(t => t.id === topicId);
@@ -272,11 +274,27 @@ export function LearningTopicPage() {
         setSelectedAnswer(null);
         setShowResult(false);
       } else {
-        // Course completed - show completion modal
+        // Course completed - show email collection modal for intro-ai course
         setCourseCompleted(true);
-        setShowCompletionModal(true);
+        if (topicId === 'intro-ai') {
+          setShowEmailModal(true);
+        } else {
+          setShowCompletionModal(true);
+        }
       }
     }, 1500);
+  };
+
+  const handleEmailSubmit = (email: string) => {
+    console.log('Email submitted:', email);
+    // Here you would typically send the email to your backend
+    
+    // Unlock the next course (ml-basics)
+    // This would typically update your user's progress in the backend
+    localStorage.setItem('unlockedCourses', JSON.stringify(['intro-ai', 'ml-basics']));
+    
+    setShowEmailModal(false);
+    setShowCompletionModal(true);
   };
 
   const handleContinueLearning = () => {
@@ -695,6 +713,14 @@ export function LearningTopicPage() {
           </div>
         </div>
       </div>
+
+      {/* Email Collection Modal */}
+      <EmailCollectionModal
+        isOpen={showEmailModal}
+        onClose={() => setShowEmailModal(false)}
+        onEmailSubmit={handleEmailSubmit}
+        completedCourse={topic?.title || ''}
+      />
 
       {/* Learning Completion Modal */}
       <LearningCompletionModal
