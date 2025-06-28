@@ -12,9 +12,16 @@ export function ProfileButton() {
   if (!state.user) return null;
 
   const handleLogout = () => {
+    setIsExpanded(false); // Close profile section
     setUser(null);
     resetTest();
     window.history.pushState(null, '', '/');
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
+  const handleNavigation = (path: string) => {
+    setIsExpanded(false); // Close profile section
+    window.history.pushState(null, '', path);
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
@@ -150,10 +157,7 @@ export function ProfileButton() {
                   </h4>
                   
                   <motion.button
-                    onClick={() => {
-                      window.history.pushState(null, '', '/test-selection');
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    }}
+                    onClick={() => handleNavigation('/test-selection')}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -170,10 +174,7 @@ export function ProfileButton() {
                   </motion.button>
 
                   <motion.button
-                    onClick={() => {
-                      window.history.pushState(null, '', '/learning');
-                      window.dispatchEvent(new PopStateEvent('popstate'));
-                    }}
+                    onClick={() => handleNavigation('/learning')}
                     className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -191,10 +192,7 @@ export function ProfileButton() {
 
                   {state.testResult && (
                     <motion.button
-                      onClick={() => {
-                        window.history.pushState(null, '', '/results');
-                        window.dispatchEvent(new PopStateEvent('popstate'));
-                      }}
+                      onClick={() => handleNavigation('/results')}
                       className="w-full flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors text-left"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
