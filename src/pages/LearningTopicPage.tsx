@@ -429,17 +429,19 @@ export function LearningTopicPage() {
               Home
             </AnimatedButton>
           </div>
-          <div className="text-right">
-            <div className="text-white font-semibold text-xs">
-              {completedLessons} of {lessons.length} lessons completed
-            </div>
-            <div className="w-32 bg-white/10 rounded-full h-2 mt-1">
-              <motion.div
-                className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full"
-                initial={{ width: 0 }}
-                animate={{ width: `${progressPercentage}%` }}
-                transition={{ duration: 0.5 }}
-              />
+          <div className="flex items-center gap-8">
+            <div className="text-left">
+              <div className="text-white font-semibold text-xs">
+                {completedLessons} of {lessons.length} lessons completed
+              </div>
+              <div className="w-32 bg-white/10 rounded-full h-2 mt-1">
+                <motion.div
+                  className="bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progressPercentage}%` }}
+                  transition={{ duration: 0.5 }}
+                />
+              </div>
             </div>
           </div>
         </motion.div>
