@@ -84,15 +84,15 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
   const generateVisualCard = async () => {
     setIsCapturing(true);
     try {
-      // Create a visual card programmatically
       const canvas = canvasRef.current;
       if (!canvas) return;
 
       const ctx = canvas.getContext('2d');
       if (!ctx) return;
 
-      canvas.width = 1200;
-      canvas.height = 630; // Optimal for social media
+      // Optimized thumbnail size for social media
+      canvas.width = 800;
+      canvas.height = 600;
 
       const template = templates[selectedTemplate];
       
@@ -121,12 +121,12 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
 
       // Add decorative elements
       ctx.globalAlpha = 0.1;
-      for (let i = 0; i < 20; i++) {
+      for (let i = 0; i < 15; i++) {
         ctx.beginPath();
         ctx.arc(
           Math.random() * canvas.width,
           Math.random() * canvas.height,
-          Math.random() * 100 + 20,
+          Math.random() * 80 + 15,
           0,
           2 * Math.PI
         );
@@ -135,28 +135,45 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
       }
       ctx.globalAlpha = 1;
 
-      // Add main content
+      // Add main content - optimized for thumbnail
       ctx.fillStyle = template.id === 'minimalist' ? '#1E293B' : '#FFFFFF';
-      ctx.font = 'bold 72px Inter, sans-serif';
+      
+      // Title
+      ctx.font = 'bold 48px Inter, sans-serif';
       ctx.textAlign = 'center';
-      ctx.fillText('SkillScan AI', canvas.width / 2, 120);
+      ctx.fillText('SkillScan AI Certificate', canvas.width / 2, 80);
 
+      // Large score display
       ctx.font = 'bold 120px Inter, sans-serif';
-      ctx.fillText(`${result.percentage}%`, canvas.width / 2, 280);
+      ctx.fillText(`${result.percentage}%`, canvas.width / 2, 220);
 
-      ctx.font = '36px Inter, sans-serif';
-      ctx.fillText(`${userName} • AI Skills Certificate`, canvas.width / 2, 340);
+      // User name
+      ctx.font = 'bold 32px Inter, sans-serif';
+      ctx.fillText(userName, canvas.width / 2, 280);
 
-      ctx.font = '28px Inter, sans-serif';
-      ctx.fillText(`${result.score}/${result.totalQuestions} questions correct`, canvas.width / 2, 390);
+      // Achievement details
+      ctx.font = '24px Inter, sans-serif';
+      ctx.fillText(`AI Skills Assessment • ${result.score}/${result.totalQuestions} correct`, canvas.width / 2, 320);
 
+      // Strengths (if any)
       if (result.strengths.length > 0) {
-        ctx.fillText(`Strengths: ${result.strengths.slice(0, 2).join(', ')}`, canvas.width / 2, 450);
+        ctx.font = '20px Inter, sans-serif';
+        ctx.fillText(`Strong in: ${result.strengths.slice(0, 2).join(', ')}`, canvas.width / 2, 360);
       }
 
-      ctx.font = '24px Inter, sans-serif';
+      // Call to action with URL
+      ctx.font = 'bold 22px Inter, sans-serif';
+      ctx.fillStyle = template.id === 'minimalist' ? '#64748B' : 'rgba(255, 255, 255, 0.9)';
+      ctx.fillText('Test your AI skills at:', canvas.width / 2, 420);
+      
+      ctx.font = 'bold 28px Inter, sans-serif';
+      ctx.fillStyle = template.id === 'minimalist' ? '#3B82F6' : '#FFD700';
+      ctx.fillText('skillscan-ai.netlify.app', canvas.width / 2, 460);
+
+      // Bottom tagline
+      ctx.font = '18px Inter, sans-serif';
       ctx.fillStyle = template.id === 'minimalist' ? '#64748B' : 'rgba(255, 255, 255, 0.8)';
-      ctx.fillText('Unlock your AI potential • SkillScan AI', canvas.width / 2, 550);
+      ctx.fillText('Unlock your AI potential • Professional Assessment', canvas.width / 2, 520);
 
       const dataUrl = canvas.toDataURL('image/png');
       setScreenshot(dataUrl);
@@ -179,46 +196,44 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
   const shareOnPlatform = async (platform: string) => {
     const encodedText = encodeURIComponent(shareText);
     
-    if (platform === 'linkedin') {
-      // For LinkedIn, we'll use the native sharing with both image and text
-      if (screenshot) {
-        // First, try to copy the image to clipboard
-        try {
-          const response = await fetch(screenshot);
-          const blob = await response.blob();
-          await navigator.clipboard.write([
-            new ClipboardItem({
-              'image/png': blob
-            })
-          ]);
-          
-          // Show a message to the user
-          alert('Certificate image copied to clipboard! You can paste it in your LinkedIn post along with the text.');
-        } catch (error) {
-          console.log('Clipboard API not supported, opening LinkedIn with text only');
-        }
-      }
-      
-      // Open LinkedIn with the text
-      const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(testUrl)}&summary=${encodedText}`;
-      window.open(linkedinUrl, '_blank', 'width=600,height=400');
-    } else {
-      const urls = {
-        twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodeURIComponent(testUrl)}`,
-        facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(testUrl)}&quote=${encodedText}`,
-        whatsapp: `https://wa.me/?text=${encodedText}`,
-        instagram: `https://www.instagram.com/`, // Instagram doesn't support direct sharing
-        email: `mailto:?subject=${encodeURIComponent('My AI Skills Assessment Results')}&body=${encodedText}`
-      };
-      
-      if (platform === 'instagram') {
-        // For Instagram, we'll copy the text and open Instagram
-        copyToClipboard(shareText);
-        window.open(urls.instagram, '_blank');
-      } else {
-        window.open(urls[platform as keyof typeof urls], '_blank', 'width=600,height=400');
+    // For all platforms, try to copy the image to clipboard first
+    if (screenshot) {
+      try {
+        const response = await fetch(screenshot);
+        const blob = await response.blob();
+        await navigator.clipboard.write([
+          new ClipboardItem({
+            'image/png': blob
+          })
+        ]);
+        
+        // Show platform-specific instructions
+        const instructions = {
+          linkedin: 'Certificate copied to clipboard! Paste it in your LinkedIn post along with the text.',
+          twitter: 'Certificate copied to clipboard! Paste it in your tweet along with the text.',
+          facebook: 'Certificate copied to clipboard! Paste it in your Facebook post along with the text.',
+          whatsapp: 'Certificate copied to clipboard! You can paste it in WhatsApp along with the message.',
+          instagram: 'Certificate copied to clipboard! You can paste it in your Instagram story or post.',
+          email: 'Certificate copied to clipboard! You can attach it to your email.'
+        };
+        
+        alert(instructions[platform as keyof typeof instructions] || 'Certificate copied to clipboard!');
+      } catch (error) {
+        console.log('Clipboard API not supported, opening platform with text only');
       }
     }
+    
+    // Open the respective platform
+    const urls = {
+      linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(testUrl)}&summary=${encodedText}`,
+      twitter: `https://twitter.com/intent/tweet?text=${encodedText}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(testUrl)}&quote=${encodedText}`,
+      whatsapp: `https://wa.me/?text=${encodedText}`,
+      instagram: `https://www.instagram.com/`,
+      email: `mailto:?subject=${encodeURIComponent('My AI Skills Assessment Results')}&body=${encodedText}`
+    };
+    
+    window.open(urls[platform as keyof typeof urls], '_blank', 'width=600,height=400');
   };
 
   const copyToClipboard = async (text?: string) => {
@@ -297,7 +312,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.8, y: 50 }}
           onClick={(e) => e.stopPropagation()}
-          className="w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+          className="w-full max-w-3xl max-h-[90vh] overflow-y-auto"
         >
           <GlassCard className="p-6">
             {/* Header */}
@@ -313,7 +328,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">Share Your Achievement</h2>
-                  <p className="text-gray-300 text-sm">Celebrate your AI skills assessment results</p>
+                  <p className="text-gray-300 text-sm">Your AI skills certificate is ready to share</p>
                 </div>
               </motion.div>
               <button
@@ -381,14 +396,14 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
               </div>
             </motion.div>
 
-            {/* Generated Certificate */}
+            {/* Generated Certificate Thumbnail */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5 }}
               className="mb-6"
             >
-              <h3 className="text-lg font-semibold text-white mb-3">Your AI Skills Certificate</h3>
+              <h3 className="text-lg font-semibold text-white mb-3">Your Shareable Certificate</h3>
               {isCapturing ? (
                 <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
                   <motion.div
@@ -403,7 +418,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
                   <img
                     src={screenshot}
                     alt="AI Skills Certificate"
-                    className="w-full rounded-xl border border-white/20 shadow-2xl"
+                    className="w-full max-w-md mx-auto rounded-xl border border-white/20 shadow-2xl"
                   />
                   <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-3">
                     <AnimatedButton
@@ -475,6 +490,11 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
                     <span className="text-white text-xs font-medium">{social.label}</span>
                   </motion.button>
                 ))}
+              </div>
+              <div className="mt-3 text-center">
+                <p className="text-gray-400 text-xs">
+                  💡 Tip: Certificate will be copied to clipboard - paste it along with your post!
+                </p>
               </div>
             </motion.div>
 
