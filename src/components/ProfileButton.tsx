@@ -25,6 +25,10 @@ export function ProfileButton() {
     window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
+  const handleProfileClick = () => {
+    setIsExpanded(!isExpanded); // Toggle profile section
+  };
+
   const getInitials = (name: string) => {
     return name
       .split(' ')
@@ -50,14 +54,13 @@ export function ProfileButton() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ delay: 0.5 }}
-      onMouseEnter={() => setIsExpanded(true)}
-      onMouseLeave={() => setIsExpanded(false)}
     >
       {/* Compact Profile Button */}
       <motion.div
         className="relative cursor-pointer"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        onClick={handleProfileClick}
       >
         <div className="flex items-center gap-2 p-3 rounded-full backdrop-blur-lg bg-white/10 border border-white/20 hover:bg-white/20 transition-colors">
           {/* User Initials */}
@@ -88,6 +91,7 @@ export function ProfileButton() {
               transition={{ duration: 0.2 }}
               className="absolute top-full right-0 mt-2 w-80"
               style={{ zIndex: 60 }}
+              onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside the panel
             >
               <GlassCard className="p-6">
                 {/* User Info Header */}
