@@ -2,8 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Download, Share2, Camera, Linkedin, Twitter, Facebook, MessageCircle, 
-  Copy, Check, Sparkles, Trophy, Target, TrendingUp, Star, Zap,
-  Globe, Mail, Instagram, Youtube, Heart, Award, Crown, Flame
+  Copy, Check, Trophy, Target, Star, Zap,
+  Mail, Instagram
 } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { AnimatedButton } from './AnimatedButton';
@@ -20,10 +20,8 @@ interface ShareModalProps {
 export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProps) {
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
-  const [activeTab, setActiveTab] = useState<'visual' | 'text' | 'custom'>('visual');
   const [copied, setCopied] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState(0);
-  const [customMessage, setCustomMessage] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -60,8 +58,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
 
   const testUrl = 'https://skillscan-ai.netlify.app';
 
-  const shareTexts = {
-    linkedin: `🎯 Just earned my AI Skills Certificate with ${result.percentage}% score!
+  const shareText = `🎯 Just earned my AI Skills Certificate with ${result.percentage}% score!
 
 🏆 I completed the SkillScan AI assessment and gained valuable insights into my AI readiness. The personalized recommendations are helping me level up my skills in this rapidly evolving field.
 
@@ -74,55 +71,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
 
 🚀 Ready to test your AI knowledge? Try SkillScan AI and discover your AI readiness level: ${testUrl}
 
-#AISkills #ProfessionalDevelopment #SkillScanAI #ArtificialIntelligence #CareerGrowth #TechSkills #AIReadiness`,
-
-    twitter: `🎯 Just aced my AI Skills Assessment! 
-
-📈 Score: ${result.percentage}%
-💪 Strengths: ${result.strengths.slice(0, 2).join(', ')}
-🎓 Ready to level up my AI game!
-
-Test your AI knowledge: ${testUrl}
-
-#AISkills #TechAssessment #SkillScanAI`,
-
-    facebook: `🎉 Exciting news! I just completed an AI Skills Assessment and earned my certificate with ${result.percentage}% score!
-
-My results:
-✅ ${result.percentage}% overall score
-🌟 Strong in: ${result.strengths.join(', ') || 'Building my foundation'}
-📚 Learning focus: ${result.weaknesses.join(', ') || 'Continuous growth'}
-
-The future is AI-powered, and I'm committed to staying ahead of the curve! 🚀
-
-Want to test your AI readiness? Check out: ${testUrl}
-
-#AILearning #ProfessionalGrowth #SkillScanAI`,
-
-    whatsapp: `🎯 Hey! Just took this amazing AI skills test and got ${result.percentage}%! 
-
-Really eye-opening to see where I stand with AI knowledge. The personalized recommendations are spot-on 👌
-
-Check out SkillScan AI if you want to assess your AI readiness too: ${testUrl}`,
-
-    email: `Subject: My AI Skills Assessment Results - ${result.percentage}% Score!
-
-Hi there!
-
-I wanted to share my recent AI Skills Assessment results with you. I scored ${result.percentage}% and gained valuable insights into my AI knowledge and areas for growth.
-
-Key highlights:
-• Overall Score: ${result.score} out of ${result.totalQuestions} questions correct
-• Strengths: ${result.strengths.join(', ') || 'Building foundation'}
-• Areas to develop: ${result.weaknesses.join(', ') || 'Continuous learning'}
-
-The assessment provided personalized learning recommendations that I'm excited to explore. As AI becomes increasingly important in our field, I think this kind of skills evaluation could be valuable for our team too.
-
-You can try it yourself at: ${testUrl}
-
-Best regards,
-${userName}`
-  };
+#AISkills #ProfessionalDevelopment #SkillScanAI #ArtificialIntelligence #CareerGrowth #TechSkills #AIReadiness`;
 
   useEffect(() => {
     if (isOpen) {
@@ -228,8 +177,7 @@ ${userName}`
   };
 
   const shareOnPlatform = async (platform: string) => {
-    const text = shareTexts[platform as keyof typeof shareTexts];
-    const encodedText = encodeURIComponent(text);
+    const encodedText = encodeURIComponent(shareText);
     
     if (platform === 'linkedin') {
       // For LinkedIn, we'll use the native sharing with both image and text
@@ -265,7 +213,7 @@ ${userName}`
       
       if (platform === 'instagram') {
         // For Instagram, we'll copy the text and open Instagram
-        copyToClipboard(text);
+        copyToClipboard(shareText);
         window.open(urls.instagram, '_blank');
       } else {
         window.open(urls[platform as keyof typeof urls], '_blank', 'width=600,height=400');
@@ -275,7 +223,7 @@ ${userName}`
 
   const copyToClipboard = async (text?: string) => {
     try {
-      const textToCopy = text || shareTexts.linkedin;
+      const textToCopy = text || shareText;
       await navigator.clipboard.writeText(textToCopy);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -400,220 +348,108 @@ ${userName}`
               </GlassCard>
             </motion.div>
 
-            {/* Tabs */}
-            <div className="flex gap-2 mb-6">
-              {[
-                { id: 'visual', label: 'Certificate', icon: Camera },
-                { id: 'text', label: 'Share Text', icon: MessageCircle },
-                { id: 'custom', label: 'Custom', icon: Sparkles }
-              ].map((tab) => (
-                <motion.button
-                  key={tab.id}
-                  onClick={() => setActiveTab(tab.id as any)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl font-medium transition-all text-sm ${
-                    activeTab === tab.id
-                      ? 'bg-purple-500 text-white shadow-lg glow-border'
-                      : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                  }`}
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  <tab.icon className="w-4 h-4" />
-                  {tab.label}
-                </motion.button>
-              ))}
-            </div>
-
-            {/* Tab Content */}
-            <AnimatePresence mode="wait">
-              {activeTab === 'visual' && (
-                <motion.div
-                  key="visual"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-4"
-                >
-                  {/* Template Selection */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">Choose Your Style</h3>
-                    <div className="grid grid-cols-4 gap-3">
-                      {templates.map((template, index) => (
-                        <motion.button
-                          key={template.id}
-                          onClick={() => {
-                            setSelectedTemplate(index);
-                            generateVisualCard();
-                          }}
-                          className={`p-3 rounded-xl border-2 transition-all ${
-                            selectedTemplate === index
-                              ? 'border-purple-500 bg-purple-500/20 glow-border'
-                              : 'border-white/20 bg-white/5 hover:border-white/30'
-                          }`}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
-                          <div className={`w-full h-12 rounded-lg bg-gradient-to-r ${template.gradient} mb-2 flex items-center justify-center`}>
-                            <template.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="text-white font-medium text-xs">{template.name}</div>
-                        </motion.button>
-                      ))}
+            {/* Template Selection */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="mb-6"
+            >
+              <h3 className="text-lg font-semibold text-white mb-3">Choose Your Certificate Style</h3>
+              <div className="grid grid-cols-4 gap-3">
+                {templates.map((template, index) => (
+                  <motion.button
+                    key={template.id}
+                    onClick={() => {
+                      setSelectedTemplate(index);
+                      generateVisualCard();
+                    }}
+                    className={`p-3 rounded-xl border-2 transition-all ${
+                      selectedTemplate === index
+                        ? 'border-purple-500 bg-purple-500/20 glow-border'
+                        : 'border-white/20 bg-white/5 hover:border-white/30'
+                    }`}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <div className={`w-full h-12 rounded-lg bg-gradient-to-r ${template.gradient} mb-2 flex items-center justify-center`}>
+                      <template.icon className="w-5 h-5 text-white" />
                     </div>
-                  </div>
+                    <div className="text-white font-medium text-xs">{template.name}</div>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
 
-                  {/* Generated Visual */}
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">Your Certificate</h3>
-                    {isCapturing ? (
-                      <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-                        <motion.div
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                          className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-3"
-                        />
-                        <p className="text-gray-400 text-sm">Creating your certificate...</p>
-                      </div>
-                    ) : screenshot ? (
-                      <div className="relative group">
-                        <img
-                          src={screenshot}
-                          alt="Achievement Certificate"
-                          className="w-full rounded-xl border border-white/20 shadow-2xl"
-                        />
-                        <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-3">
-                          <AnimatedButton
-                            variant="secondary"
-                            onClick={downloadScreenshot}
-                            className="flex items-center gap-2"
-                            size="sm"
-                            glowing={true}
-                          >
-                            <Download className="w-4 h-4" />
-                            Download
-                          </AnimatedButton>
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
-                        <Camera className="w-8 h-8 text-gray-400 mx-auto mb-3" />
-                        <p className="text-gray-400 text-sm mb-3">No certificate available</p>
-                        <AnimatedButton
-                          variant="secondary"
-                          onClick={generateVisualCard}
-                          size="sm"
-                          glowing={true}
-                        >
-                          Generate Certificate
-                        </AnimatedButton>
-                      </div>
-                    )}
+            {/* Generated Certificate */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+              className="mb-6"
+            >
+              <h3 className="text-lg font-semibold text-white mb-3">Your AI Skills Certificate</h3>
+              {isCapturing ? (
+                <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+                    className="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full mx-auto mb-3"
+                  />
+                  <p className="text-gray-400 text-sm">Creating your certificate...</p>
+                </div>
+              ) : screenshot ? (
+                <div className="relative group">
+                  <img
+                    src={screenshot}
+                    alt="AI Skills Certificate"
+                    className="w-full rounded-xl border border-white/20 shadow-2xl"
+                  />
+                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-xl flex items-center justify-center gap-3">
+                    <AnimatedButton
+                      variant="secondary"
+                      onClick={downloadScreenshot}
+                      className="flex items-center gap-2"
+                      size="sm"
+                      glowing={true}
+                    >
+                      <Download className="w-4 h-4" />
+                      Download
+                    </AnimatedButton>
+                    <AnimatedButton
+                      variant="secondary"
+                      onClick={() => copyToClipboard()}
+                      className="flex items-center gap-2"
+                      size="sm"
+                      glowing={true}
+                    >
+                      <Copy className="w-4 h-4" />
+                      Copy Text
+                    </AnimatedButton>
                   </div>
-
-                  <canvas ref={canvasRef} className="hidden" />
-                </motion.div>
+                </div>
+              ) : (
+                <div className="bg-white/5 border border-white/10 rounded-xl p-8 text-center">
+                  <Camera className="w-8 h-8 text-gray-400 mx-auto mb-3" />
+                  <p className="text-gray-400 text-sm mb-3">No certificate available</p>
+                  <AnimatedButton
+                    variant="secondary"
+                    onClick={generateVisualCard}
+                    size="sm"
+                    glowing={true}
+                  >
+                    Generate Certificate
+                  </AnimatedButton>
+                </div>
               )}
-
-              {activeTab === 'text' && (
-                <motion.div
-                  key="text"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-4"
-                >
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">Platform Messages</h3>
-                    <div className="grid gap-3">
-                      {Object.entries(shareTexts).slice(0, 3).map(([platform, text]) => (
-                        <motion.div
-                          key={platform}
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ delay: 0.1 * Object.keys(shareTexts).indexOf(platform) }}
-                        >
-                          <GlassCard className="p-3">
-                            <div className="flex items-center justify-between mb-2">
-                              <h4 className="font-semibold text-white capitalize flex items-center gap-2 text-sm">
-                                {platform === 'linkedin' && <Linkedin className="w-4 h-4 text-blue-500" />}
-                                {platform === 'twitter' && <Twitter className="w-4 h-4 text-blue-400" />}
-                                {platform === 'facebook' && <Facebook className="w-4 h-4 text-blue-600" />}
-                                {platform}
-                              </h4>
-                              <AnimatedButton
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => copyToClipboard(text)}
-                                className="flex items-center gap-1 text-xs"
-                                glowing={true}
-                              >
-                                {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                                {copied ? 'Copied!' : 'Copy'}
-                              </AnimatedButton>
-                            </div>
-                            <div className="bg-white/5 rounded-lg p-2 max-h-20 overflow-y-auto">
-                              <pre className="text-gray-300 text-xs whitespace-pre-wrap font-sans">
-                                {text.slice(0, 200)}...
-                              </pre>
-                            </div>
-                          </GlassCard>
-                        </motion.div>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              )}
-
-              {activeTab === 'custom' && (
-                <motion.div
-                  key="custom"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  className="space-y-4"
-                >
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-3">Custom Message</h3>
-                    <GlassCard className="p-4">
-                      <textarea
-                        value={customMessage}
-                        onChange={(e) => setCustomMessage(e.target.value)}
-                        placeholder={`Write your custom message here... 
-
-You can include:
-• Your score: ${result.percentage}%
-• Your strengths: ${result.strengths.join(', ')}
-• Personal insights`}
-                        className="w-full h-32 bg-white/5 border border-white/20 rounded-xl p-3 text-white placeholder-gray-400 resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 text-sm"
-                      />
-                      <div className="flex justify-between items-center mt-3">
-                        <div className="text-gray-400 text-xs">
-                          {customMessage.length} characters
-                        </div>
-                        <AnimatedButton
-                          variant="secondary"
-                          onClick={() => copyToClipboard(customMessage)}
-                          disabled={!customMessage.trim()}
-                          className="flex items-center gap-2"
-                          size="sm"
-                          glowing={!!customMessage.trim()}
-                        >
-                          {copied ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
-                          {copied ? 'Copied!' : 'Copy'}
-                        </AnimatedButton>
-                      </div>
-                    </GlassCard>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            </motion.div>
 
             {/* Social Media Sharing */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="mt-6"
+              transition={{ delay: 0.6 }}
+              className="mb-6"
             >
               <h3 className="text-lg font-semibold text-white mb-4">Share Your Achievement</h3>
               <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
@@ -633,7 +469,7 @@ You can include:
                     whileTap={{ scale: 0.95 }}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
+                    transition={{ delay: 0.7 + index * 0.1 }}
                   >
                     <social.icon className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
                     <span className="text-white text-xs font-medium">{social.label}</span>
@@ -646,8 +482,8 @@ You can include:
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="flex justify-center gap-3 mt-6 pt-4 border-t border-white/10"
+              transition={{ delay: 0.8 }}
+              className="flex justify-center gap-3 pt-4 border-t border-white/10"
             >
               <AnimatedButton
                 variant="secondary"
@@ -657,7 +493,7 @@ You can include:
                 glowing={true}
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-                {copied ? 'Copied!' : 'Copy Text'}
+                {copied ? 'Copied!' : 'Copy Share Text'}
               </AnimatedButton>
               {screenshot && (
                 <AnimatedButton
@@ -672,6 +508,8 @@ You can include:
                 </AnimatedButton>
               )}
             </motion.div>
+
+            <canvas ref={canvasRef} className="hidden" />
           </GlassCard>
         </motion.div>
       </motion.div>
