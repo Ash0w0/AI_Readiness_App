@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Award, Target, TrendingUp, BookOpen, RotateCcw, Share2, Lock } from 'lucide-react';
 import { GlassCard } from '../components/GlassCard';
 import { AnimatedButton } from '../components/AnimatedButton';
+import { ShareModal } from '../components/ShareModal';
 import { useApp } from '../context/AppContext';
 
 interface ResultsPageProps {
@@ -13,6 +14,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
   const { state, resetTest } = useApp();
   const [animatedScore, setAnimatedScore] = useState(0);
   const [showDetails, setShowDetails] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
 
   const result = state.testResult;
   if (!result) return null;
@@ -56,21 +58,6 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
   const handleNewTest = () => {
     resetTest();
     onRestart();
-  };
-
-  const handleShare = () => {
-    // Create shareable data
-    const shareData = {
-      result,
-      userName: state.user?.name || 'User'
-    };
-    
-    // Encode the data for URL
-    const encodedData = encodeURIComponent(JSON.stringify(shareData));
-    
-    // Navigate to share page
-    window.history.pushState(null, '', `/share/${encodedData}`);
-    window.dispatchEvent(new PopStateEvent('popstate'));
   };
 
   const handleLearningClick = (topicId: string, available: boolean) => {
@@ -385,16 +372,22 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
             Take Another Test
           </AnimatedButton>
           <AnimatedButton
-            onClick={handleShare}
+            onClick={() => setShowShareModal(true)}
             className="flex items-center gap-2"
             variant="primary"
-            glowing={true}
           >
             <Share2 className="w-5 h-5" />
             Share Results
           </AnimatedButton>
         </motion.div>
       </div>
+
+      <ShareModal
+        isOpen={showShareModal}
+        onClose={() => setShowShareModal(false)}
+        result={result}
+        userName={state.user?.name || 'User'}
+      />
     </div>
   );
 }
