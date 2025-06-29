@@ -11,10 +11,24 @@
   body {
     @apply bg-background text-foreground font-sans;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
   }
 
   html {
     scroll-behavior: smooth;
+    /* Prevent zoom on input focus on iOS */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* Prevent zoom on input focus on iOS */
+  input, select, textarea {
+    font-size: 16px;
+  }
+
+  /* Better touch targets for mobile */
+  button, a, input, select, textarea {
+    touch-action: manipulation;
   }
 }
 
@@ -150,6 +164,87 @@
   .journey-button:active {
     transform: translateY(0) scale(0.99);
   }
+
+  /* Mobile-specific optimizations */
+  @media (max-width: 768px) {
+    .glass-morphism {
+      @apply backdrop-blur-md bg-white/15 border border-white/25;
+    }
+
+    /* Larger touch targets on mobile */
+    button, .clickable {
+      min-height: 44px;
+      min-width: 44px;
+    }
+
+    /* Better spacing on mobile */
+    .mobile-spacing {
+      @apply px-4 py-6;
+    }
+
+    /* Responsive text sizes */
+    .mobile-text-lg {
+      @apply text-base;
+    }
+
+    .mobile-text-xl {
+      @apply text-lg;
+    }
+
+    .mobile-text-2xl {
+      @apply text-xl;
+    }
+
+    .mobile-text-3xl {
+      @apply text-2xl;
+    }
+
+    .mobile-text-4xl {
+      @apply text-3xl;
+    }
+
+    /* Mobile grid adjustments */
+    .mobile-grid-1 {
+      @apply grid-cols-1;
+    }
+
+    .mobile-grid-2 {
+      @apply grid-cols-2;
+    }
+
+    /* Mobile padding adjustments */
+    .mobile-p-4 {
+      @apply p-4;
+    }
+
+    .mobile-p-6 {
+      @apply p-6;
+    }
+
+    /* Mobile gap adjustments */
+    .mobile-gap-4 {
+      @apply gap-4;
+    }
+
+    .mobile-gap-6 {
+      @apply gap-6;
+    }
+  }
+
+  /* Tablet optimizations */
+  @media (min-width: 769px) and (max-width: 1024px) {
+    .tablet-grid-2 {
+      @apply grid-cols-2;
+    }
+
+    .tablet-text-xl {
+      @apply text-xl;
+    }
+
+    .tablet-text-2xl {
+      @apply text-2xl;
+    }
+  }
 }
 
 @keyframes shimmer {
@@ -231,6 +326,13 @@
 
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-gray-500 dark:bg-gray-500;
+}
+
+/* Mobile scrollbar */
+@media (max-width: 768px) {
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
 }
 
 /* Custom scrollbar - Light Mode */
@@ -346,4 +448,94 @@
   backdrop-filter: blur(25px);
   border: 1px solid rgba(255,255,255,0.5);
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 640px) {
+  /* Prevent horizontal overflow */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Better mobile spacing */
+  .container {
+    @apply px-4;
+  }
+
+  /* Mobile-friendly button sizes */
+  .btn-mobile {
+    @apply px-6 py-4 text-base;
+    min-height: 48px;
+  }
+
+  /* Mobile modal adjustments */
+  .modal-mobile {
+    @apply m-2 max-h-[95vh];
+  }
+
+  /* Mobile grid improvements */
+  .grid-mobile-1 {
+    @apply grid-cols-1 gap-4;
+  }
+
+  .grid-mobile-2 {
+    @apply grid-cols-2 gap-3;
+  }
+
+  /* Mobile text adjustments */
+  .heading-mobile {
+    @apply text-2xl leading-tight;
+  }
+
+  .subheading-mobile {
+    @apply text-lg leading-snug;
+  }
+
+  /* Mobile card padding */
+  .card-mobile {
+    @apply p-4;
+  }
+
+  /* Mobile navigation */
+  .nav-mobile {
+    @apply flex-col space-y-2;
+  }
+}
+
+/* Landscape mobile optimizations */
+@media (max-height: 500px) and (orientation: landscape) {
+  .landscape-mobile {
+    @apply py-2;
+  }
+
+  .landscape-mobile .modal-content {
+    @apply max-h-[90vh] overflow-y-auto;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .high-dpi {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Safe area adjustments for mobile devices with notches */
+@supports (padding: max(0px)) {
+  .safe-area-top {
+    padding-top: max(1rem, env(safe-area-inset-top));
+  }
+
+  .safe-area-bottom {
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+
+  .safe-area-left {
+    padding-left: max(1rem, env(safe-area-inset-left));
+  }
+
+  .safe-area-right {
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
 }

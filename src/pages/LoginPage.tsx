@@ -25,7 +25,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
   };
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 ${
+    <div className={`min-h-screen flex items-center justify-center p-4 safe-area-top safe-area-bottom ${
       state.darkMode 
         ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
         : 'light-bg-primary'
@@ -53,26 +53,26 @@ export function LoginPage({ onLogin }: LoginPageProps) {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="text-center mb-8"
+          className="text-center mb-6 sm:mb-8"
         >
           <motion.div
             className="flex justify-center mb-4"
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
           >
-            <Brain className={`w-16 h-16 ${
+            <Brain className={`w-12 h-12 sm:w-16 sm:h-16 ${
               state.darkMode ? 'text-purple-400' : 'text-white'
             }`} />
           </motion.div>
-          <h1 className={`text-4xl font-bold mb-2 ${
+          <h1 className={`text-3xl sm:text-4xl font-bold mb-2 ${
             state.darkMode ? 'text-white' : 'text-white'
           }`}>SkillScan AI</h1>
-          <p className={`${
+          <p className={`text-sm sm:text-base ${
             state.darkMode ? 'text-gray-300' : 'text-white/90'
           }`}>Assess your AI skills and unlock your potential</p>
         </motion.div>
 
-        <GlassCard className={`p-8 ${
+        <GlassCard className={`p-6 sm:p-8 ${
           state.darkMode ? '' : 'card-light'
         }`}>
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -88,7 +88,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Enter your full name"
-                className={`w-full px-4 py-3 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent ${
+                className={`w-full px-4 py-3 sm:py-4 rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-base ${
                   state.darkMode 
                     ? 'bg-white/10 border-white/20 text-white placeholder-gray-400' 
                     : 'bg-white/30 border-white/40 text-gray-800 placeholder-gray-600 backdrop-blur-sm'
@@ -106,7 +106,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               <button
                 type="button"
                 onClick={() => setShowRoleDropdown(!showRoleDropdown)}
-                className={`w-full px-4 py-3 rounded-xl border text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all flex items-center justify-between ${
+                className={`w-full px-4 py-3 sm:py-4 rounded-xl border text-left focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all flex items-center justify-between text-base ${
                   state.darkMode 
                     ? 'bg-white/10 border-white/20 text-white' 
                     : 'bg-white/30 border-white/40 text-gray-800 backdrop-blur-sm'
@@ -142,7 +142,7 @@ export function LoginPage({ onLogin }: LoginPageProps) {
                           setSelectedRole(role);
                           setShowRoleDropdown(false);
                         }}
-                        className={`w-full px-4 py-3 text-left transition-colors border-none bg-transparent focus:outline-none ${
+                        className={`w-full px-4 py-3 sm:py-4 text-left transition-colors border-none bg-transparent focus:outline-none text-base ${
                           state.darkMode 
                             ? 'text-white hover:bg-white/15 focus:bg-white/20' 
                             : 'text-gray-800 hover:bg-white/30 focus:bg-white/40'
@@ -156,12 +156,12 @@ export function LoginPage({ onLogin }: LoginPageProps) {
               )}
             </div>
 
-            {/* Journey Button Container with Right Margin */}
-            <div className="mr-4">
+            {/* Journey Button Container */}
+            <div>
               <AnimatedButton
                 type="submit"
                 size="lg"
-                className="w-full journey-button"
+                className="w-full journey-button btn-mobile"
                 disabled={!name.trim() || !selectedRole}
                 variant="journey"
               >

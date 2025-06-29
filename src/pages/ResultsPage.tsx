@@ -72,7 +72,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
   };
 
   return (
-    <div className={`min-h-screen p-4 ${
+    <div className={`min-h-screen p-4 safe-area-top safe-area-bottom ${
       state.darkMode 
         ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
         : 'light-bg-quaternary'
@@ -87,22 +87,22 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
         }`} />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto pt-8">
+      <div className="relative z-10 max-w-6xl mx-auto pt-6 sm:pt-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
-          <h1 className={`text-4xl font-bold mb-4 ${
+          <h1 className={`text-3xl sm:text-4xl font-bold mb-4 ${
             state.darkMode ? 'text-white' : 'text-white'
           }`}>Assessment Complete!</h1>
-          <p className={`text-lg ${
+          <p className={`text-base sm:text-lg ${
             state.darkMode ? 'text-gray-300' : 'text-white/90'
           }`}>Here are your SkillScan AI results</p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Score Card */}
           <div className="lg:col-span-1">
             <motion.div
@@ -110,7 +110,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <GlassCard className={`p-8 text-center ${
+              <GlassCard className={`p-6 sm:p-8 text-center ${
                 state.darkMode ? '' : 'card-light'
               }`}>
                 <motion.div
@@ -119,8 +119,8 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                   transition={{ delay: 0.5, type: 'spring' }}
                   className="mb-6"
                 >
-                  <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${getScoreColor(result.percentage)} mb-4`}>
-                    <Award className="w-12 h-12 text-white" />
+                  <div className={`inline-flex p-3 sm:p-4 rounded-full bg-gradient-to-r ${getScoreColor(result.percentage)} mb-4`}>
+                    <Award className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
                   </div>
                 </motion.div>
 
@@ -129,18 +129,18 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ delay: 0.8, type: 'spring' }}
-                    className={`text-6xl font-bold mb-2 ${
+                    className={`text-5xl sm:text-6xl font-bold mb-2 ${
                       state.darkMode ? 'text-white' : 'text-gray-800'
                     }`}
                   >
                     {Math.round(animatedScore)}%
                   </motion.div>
-                  <p className={`text-lg mb-2 ${
+                  <p className={`text-base sm:text-lg mb-2 ${
                     state.darkMode ? 'text-gray-300' : 'text-gray-600'
                   }`}>
                     {result.score} out of {result.totalQuestions} correct
                   </p>
-                  <p className={`${
+                  <p className={`text-sm sm:text-base ${
                     state.darkMode ? 'text-gray-400' : 'text-gray-500'
                   }`}>
                     {getScoreMessage(result.percentage)}
@@ -149,18 +149,18 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
 
                 <div className="grid grid-cols-2 gap-4 text-center">
                   <div>
-                    <div className="text-2xl font-bold text-green-400">
+                    <div className="text-xl sm:text-2xl font-bold text-green-400">
                       {result.strengths.length}
                     </div>
-                    <div className={`text-sm ${
+                    <div className={`text-xs sm:text-sm ${
                       state.darkMode ? 'text-gray-400' : 'text-gray-500'
                     }`}>Strengths</div>
                   </div>
                   <div>
-                    <div className="text-2xl font-bold text-orange-400">
+                    <div className="text-xl sm:text-2xl font-bold text-orange-400">
                       {result.weaknesses.length}
                     </div>
-                    <div className={`text-sm ${
+                    <div className={`text-xs sm:text-sm ${
                       state.darkMode ? 'text-gray-400' : 'text-gray-500'
                     }`}>Areas to Improve</div>
                   </div>
@@ -177,18 +177,18 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               animate={{ opacity: showDetails ? 1 : 0, x: showDetails ? 0 : 20 }}
               transition={{ delay: 0.2 }}
             >
-              <GlassCard className={`p-6 ${
+              <GlassCard className={`p-4 sm:p-6 ${
                 state.darkMode ? '' : 'card-light'
               }`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`p-2 rounded-lg ${
                     state.darkMode ? 'bg-green-500/20' : 'bg-green-500/30'
                   }`}>
-                    <TrendingUp className={`w-6 h-6 ${
+                    <TrendingUp className={`w-5 h-5 sm:w-6 sm:h-6 ${
                       state.darkMode ? 'text-green-400' : 'text-green-600'
                     }`} />
                   </div>
-                  <h3 className={`text-xl font-semibold ${
+                  <h3 className={`text-lg sm:text-xl font-semibold ${
                     state.darkMode ? 'text-white' : 'text-gray-800'
                   }`}>Your Strengths</h3>
                 </div>
@@ -200,7 +200,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.5 + index * 0.1 }}
-                        className={`px-4 py-2 rounded-full text-sm font-medium ${
+                        className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium ${
                           state.darkMode 
                             ? 'bg-green-500/20 text-green-300' 
                             : 'bg-green-500/30 text-green-700'
@@ -211,7 +211,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className={`${
+                  <p className={`text-sm sm:text-base ${
                     state.darkMode ? 'text-gray-400' : 'text-gray-500'
                   }`}>Keep learning to identify your strengths!</p>
                 )}
@@ -224,18 +224,18 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               animate={{ opacity: showDetails ? 1 : 0, x: showDetails ? 0 : 20 }}
               transition={{ delay: 0.4 }}
             >
-              <GlassCard className={`p-6 ${
+              <GlassCard className={`p-4 sm:p-6 ${
                 state.darkMode ? '' : 'card-light'
               }`}>
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`p-2 rounded-lg ${
                     state.darkMode ? 'bg-orange-500/20' : 'bg-orange-500/30'
                   }`}>
-                    <Target className={`w-6 h-6 ${
+                    <Target className={`w-5 h-5 sm:w-6 sm:h-6 ${
                       state.darkMode ? 'text-orange-400' : 'text-orange-600'
                     }`} />
                   </div>
-                  <h3 className={`text-xl font-semibold ${
+                  <h3 className={`text-lg sm:text-xl font-semibold ${
                     state.darkMode ? 'text-white' : 'text-gray-800'
                   }`}>Areas to Focus On</h3>
                 </div>
@@ -247,7 +247,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         initial={{ opacity: 0, scale: 0.8 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ delay: 0.7 + index * 0.1 }}
-                        className={`px-4 py-2 rounded-full text-sm font-medium ${
+                        className={`px-3 sm:px-4 py-2 rounded-full text-xs sm:text-sm font-medium ${
                           state.darkMode 
                             ? 'bg-orange-500/20 text-orange-300' 
                             : 'bg-orange-500/30 text-orange-700'
@@ -258,7 +258,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                     ))}
                   </div>
                 ) : (
-                  <p className={`${
+                  <p className={`text-sm sm:text-base ${
                     state.darkMode ? 'text-gray-400' : 'text-gray-500'
                   }`}>Great! No major weak areas identified.</p>
                 )}
@@ -271,22 +271,22 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
               animate={{ opacity: showDetails ? 1 : 0, x: showDetails ? 0 : 20 }}
               transition={{ delay: 0.6 }}
             >
-              <GlassCard className={`p-6 ${
+              <GlassCard className={`p-4 sm:p-6 ${
                 state.darkMode ? '' : 'card-light'
               }`}>
-                <div className="flex items-center gap-3 mb-6">
+                <div className="flex items-center gap-3 mb-4 sm:mb-6">
                   <div className={`p-2 rounded-lg ${
                     state.darkMode ? 'bg-blue-500/20' : 'bg-blue-500/30'
                   }`}>
-                    <BookOpen className={`w-6 h-6 ${
+                    <BookOpen className={`w-5 h-5 sm:w-6 sm:h-6 ${
                       state.darkMode ? 'text-blue-400' : 'text-blue-600'
                     }`} />
                   </div>
-                  <h3 className={`text-xl font-semibold ${
+                  <h3 className={`text-lg sm:text-xl font-semibold ${
                     state.darkMode ? 'text-white' : 'text-gray-800'
                   }`}>Recommended Learning</h3>
                 </div>
-                <div className="grid md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {result.suggestedTopics.map((topic, index) => {
                     const available = isTopicAvailable(topic.id);
                     return (
@@ -311,7 +311,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                             <Lock className="w-4 h-4 text-gray-400" />
                           </div>
                         )}
-                        <h4 className={`font-semibold mb-2 transition-colors ${
+                        <h4 className={`font-semibold mb-2 transition-colors text-sm sm:text-base ${
                           available 
                             ? (state.darkMode 
                                 ? 'text-white group-hover:text-purple-300' 
@@ -320,7 +320,7 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
                         }`}>
                           {topic.title}
                         </h4>
-                        <p className={`text-sm mb-3 ${
+                        <p className={`text-xs sm:text-sm mb-3 ${
                           available 
                             ? (state.darkMode ? 'text-gray-400' : 'text-gray-600')
                             : 'text-gray-500'
@@ -360,23 +360,23 @@ export function ResultsPage({ onRestart }: ResultsPageProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="flex justify-center gap-4 mt-12 mb-8"
+          className="flex flex-col sm:flex-row justify-center gap-4 mt-8 sm:mt-12 mb-8"
         >
           <AnimatedButton
             variant="secondary"
             onClick={handleNewTest}
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto btn-mobile"
             glowing={false}
           >
-            <RotateCcw className="w-5 h-5" />
+            <RotateCcw className="w-4 h-4 sm:w-5 sm:h-5" />
             Take Another Test
           </AnimatedButton>
           <AnimatedButton
             onClick={() => setShowShareModal(true)}
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto btn-mobile"
             variant="primary"
           >
-            <Share2 className="w-5 h-5" />
+            <Share2 className="w-4 h-4 sm:w-5 sm:h-5" />
             Share Results
           </AnimatedButton>
         </motion.div>

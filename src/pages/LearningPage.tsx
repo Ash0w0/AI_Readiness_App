@@ -27,19 +27,19 @@ export function LearningPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-4 safe-area-top safe-area-bottom">
       {/* Background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl" />
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-6xl mx-auto pt-8">
+      <div className="relative z-10 max-w-6xl mx-auto pt-6 sm:pt-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-8"
+          className="flex items-center justify-between mb-6 sm:mb-8"
         >
           <div className="flex items-center gap-4">
             <AnimatedButton
@@ -48,8 +48,9 @@ export function LearningPage() {
               className="flex items-center gap-2"
               glowing={true}
             >
-              <ArrowLeft className="w-5 h-5" />
-              Back to Home
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="hidden sm:inline">Back to Home</span>
+              <span className="sm:hidden">Back</span>
             </AnimatedButton>
           </div>
         </motion.div>
@@ -57,21 +58,21 @@ export function LearningPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-12"
+          className="text-center mb-8 sm:mb-12"
         >
           <div className="flex justify-center mb-4">
-            <div className="p-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl">
-              <BookOpen className="w-12 h-12 text-white" />
+            <div className="p-3 sm:p-4 bg-gradient-to-r from-purple-500 to-blue-500 rounded-2xl">
+              <BookOpen className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
             </div>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-4">AI Learning Hub</h1>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <h1 className="text-3xl sm:text-4xl font-bold text-white mb-4">AI Learning Hub</h1>
+          <p className="text-gray-300 text-base sm:text-lg max-w-2xl mx-auto">
             Enhance your AI knowledge with our curated learning paths. Start with the fundamentals and progress to advanced topics.
           </p>
         </motion.div>
 
         {/* Learning Topics Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {learningTopics.map((topic, index) => {
             const available = isTopicUnlocked(topic.id);
             return (
@@ -83,7 +84,7 @@ export function LearningPage() {
               >
                 <GlassCard
                   hover={available}
-                  className={`p-6 h-full flex flex-col relative ${
+                  className={`p-4 sm:p-6 h-full flex flex-col relative ${
                     available 
                       ? 'cursor-pointer glow-border' 
                       : 'opacity-50 cursor-not-allowed'
@@ -91,27 +92,27 @@ export function LearningPage() {
                   onClick={() => handleTopicClick(topic.id)}
                 >
                   {!available && (
-                    <div className="absolute top-4 right-4">
-                      <Lock className="w-5 h-5 text-gray-400" />
+                    <div className="absolute top-3 sm:top-4 right-3 sm:right-4">
+                      <Lock className="w-4 h-4 sm:w-5 sm:h-5 text-gray-400" />
                     </div>
                   )}
 
                   <div className="mb-4">
-                    <div className="flex items-center gap-2 mb-3">
-                      <span className={`px-3 py-1 rounded-full text-sm font-medium ${getDifficultyColor(topic.difficulty)}`}>
+                    <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-3">
+                      <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${getDifficultyColor(topic.difficulty)}`}>
                         {topic.difficulty}
                       </span>
-                      <div className="flex items-center gap-1 text-gray-400 text-sm">
-                        <Clock className="w-4 h-4" />
+                      <div className="flex items-center gap-1 text-gray-400 text-xs sm:text-sm">
+                        <Clock className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>{available ? topic.estimatedTime : 'Available Soon'}</span>
                       </div>
                     </div>
-                    <h3 className={`text-xl font-semibold mb-2 ${
+                    <h3 className={`text-lg sm:text-xl font-semibold mb-2 ${
                       available ? 'text-white' : 'text-gray-400'
                     }`}>
                       {topic.title}
                     </h3>
-                    <p className={`text-sm leading-relaxed ${
+                    <p className={`text-xs sm:text-sm leading-relaxed ${
                       available ? 'text-gray-300' : 'text-gray-500'
                     }`}>
                       {topic.description}
@@ -120,7 +121,7 @@ export function LearningPage() {
 
                   <div className="mt-auto">
                     <div className="mb-4">
-                      <h4 className={`text-sm font-medium mb-2 ${
+                      <h4 className={`text-xs sm:text-sm font-medium mb-2 ${
                         available ? 'text-gray-300' : 'text-gray-500'
                       }`}>
                         Learning Resources:
@@ -131,17 +132,17 @@ export function LearningPage() {
                             available ? 'text-gray-400' : 'text-gray-600'
                           }`}>
                             <div className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0" />
-                            {resource}
+                            <span className="truncate">{resource}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
 
-                    <div className={`flex items-center justify-between text-sm ${
+                    <div className={`flex items-center justify-between text-xs sm:text-sm ${
                       available ? 'text-gray-300' : 'text-gray-500'
                     }`}>
                       <div className="flex items-center gap-1">
-                        <Target className="w-4 h-4" />
+                        <Target className="w-3 h-3 sm:w-4 sm:h-4" />
                         <span>Interactive</span>
                       </div>
                       <span className="font-medium">
@@ -160,7 +161,7 @@ export function LearningPage() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
-          className="text-center mt-12 text-gray-400"
+          className="text-center mt-8 sm:mt-12 text-gray-400 text-sm sm:text-base"
         >
           <p>Complete courses to unlock new learning paths. Start with the fundamentals to build a strong foundation.</p>
         </motion.div>

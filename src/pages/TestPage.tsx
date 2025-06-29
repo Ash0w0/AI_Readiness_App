@@ -85,7 +85,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
 
   if (!currentQuestion) {
     return (
-      <div className={`min-h-screen flex items-center justify-center ${
+      <div className={`min-h-screen flex items-center justify-center safe-area-top safe-area-bottom ${
         state.darkMode 
           ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
           : 'light-bg-tertiary'
@@ -101,7 +101,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
   }
 
   return (
-    <div className={`min-h-screen p-4 ${
+    <div className={`min-h-screen p-4 safe-area-top safe-area-bottom ${
       state.darkMode 
         ? 'bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900' 
         : 'light-bg-tertiary'
@@ -121,31 +121,31 @@ export function TestPage({ onTestComplete }: TestPageProps) {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-8 pt-8"
+          className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 sm:mb-8 pt-6 sm:pt-8 gap-4"
         >
           <div>
-            <h1 className={`text-2xl font-bold ${
+            <h1 className={`text-xl sm:text-2xl font-bold ${
               state.darkMode ? 'text-white' : 'text-white'
             }`}>
               SkillScan AI Assessment
             </h1>
-            <p className={`${
+            <p className={`text-sm sm:text-base ${
               state.darkMode ? 'text-gray-300' : 'text-white/90'
             }`}>
               Question {state.currentQuestionIndex + 1} of {questions.length}
             </p>
           </div>
           <div className="flex items-center gap-4">
-            <div className={`flex items-center gap-2 ${
+            <div className={`flex items-center gap-2 text-sm sm:text-base ${
               state.darkMode ? 'text-white' : 'text-white'
             }`}>
-              <CheckCircle className="w-5 h-5" />
+              <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>{answeredQuestions}/{questions.length}</span>
             </div>
-            <div className={`flex items-center gap-2 ${
+            <div className={`flex items-center gap-2 text-sm sm:text-base ${
               timeRemaining < 300 ? 'text-red-400' : (state.darkMode ? 'text-white' : 'text-white')
             }`}>
-              <Clock className="w-5 h-5" />
+              <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
               <span>{formatTime(timeRemaining)}</span>
             </div>
           </div>
@@ -155,7 +155,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}
-          className="mb-8"
+          className="mb-6 sm:mb-8"
         >
           <ProgressBar 
             current={state.currentQuestionIndex + 1} 
@@ -172,19 +172,19 @@ export function TestPage({ onTestComplete }: TestPageProps) {
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
           >
-            <GlassCard className={`p-8 mb-8 ${
+            <GlassCard className={`p-6 sm:p-8 mb-6 sm:mb-8 ${
               state.darkMode ? '' : 'card-light'
             }`}>
               <div className="mb-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-4">
+                  <span className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium ${
                     state.darkMode 
                       ? 'bg-purple-500/20 text-purple-300' 
                       : 'bg-purple-500/30 text-purple-700'
                   }`}>
                     {currentQuestion.category}
                   </span>
-                  <span className={`px-3 py-1 rounded-full text-sm font-medium capitalize ${
+                  <span className={`px-3 py-1 rounded-full text-xs sm:text-sm font-medium capitalize ${
                     state.darkMode 
                       ? 'bg-blue-500/20 text-blue-300' 
                       : 'bg-blue-500/30 text-blue-700'
@@ -192,7 +192,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                     {currentQuestion.difficulty}
                   </span>
                 </div>
-                <h2 className={`text-xl font-semibold leading-relaxed ${
+                <h2 className={`text-lg sm:text-xl font-semibold leading-relaxed ${
                   state.darkMode ? 'text-white' : 'text-gray-800'
                 }`}>
                   {currentQuestion.question}
@@ -204,7 +204,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                   <motion.button
                     key={index}
                     onClick={() => handleAnswerSelect(index)}
-                    className={`w-full p-4 text-left rounded-xl border-2 transition-all ${
+                    className={`w-full p-4 text-left rounded-xl border-2 transition-all text-sm sm:text-base ${
                       selectedAnswer === index
                         ? (state.darkMode 
                             ? 'border-purple-500 bg-purple-500/20 text-white' 
@@ -217,7 +217,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                     whileTap={{ scale: 0.99 }}
                   >
                     <div className="flex items-center gap-3">
-                      <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center ${
+                      <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 flex items-center justify-center ${
                         selectedAnswer === index
                           ? (state.darkMode 
                               ? 'border-purple-500 bg-purple-500' 
@@ -228,7 +228,7 @@ export function TestPage({ onTestComplete }: TestPageProps) {
                           <div className="w-2 h-2 bg-white rounded-full" />
                         )}
                       </div>
-                      <span>{option}</span>
+                      <span className="leading-relaxed">{option}</span>
                     </div>
                   </motion.button>
                 ))}
@@ -241,20 +241,20 @@ export function TestPage({ onTestComplete }: TestPageProps) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between"
+          className="flex flex-col sm:flex-row items-center justify-between gap-4"
         >
           <AnimatedButton
             variant="secondary"
             onClick={handlePreviousQuestion}
             disabled={state.currentQuestionIndex === 0}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 w-full sm:w-auto btn-mobile"
             glowing={false}
           >
-            <ChevronLeft className="w-5 h-5" />
+            <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             Previous
           </AnimatedButton>
 
-          <div className={`text-sm ${
+          <div className={`text-xs sm:text-sm text-center ${
             state.darkMode ? 'text-gray-400' : 'text-white/80'
           }`}>
             {selectedAnswer === -1 ? 'Select an answer to continue' : 'Answer selected'}
@@ -263,11 +263,11 @@ export function TestPage({ onTestComplete }: TestPageProps) {
           <AnimatedButton
             onClick={handleNextQuestion}
             disabled={selectedAnswer === -1}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 w-full sm:w-auto btn-mobile"
             variant="primary"
           >
             {isLastQuestion ? 'Finish Test' : 'Next'}
-            <ChevronRight className="w-5 h-5" />
+            <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
           </AnimatedButton>
         </motion.div>
       </div>
