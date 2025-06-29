@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { 
   X, Download, Share2, Camera, Linkedin, Twitter, Facebook, MessageCircle, 
   Copy, Check, Trophy, Target, Star, Zap,
-  Mail, Instagram
+  Mail, Instagram, Smartphone
 } from 'lucide-react';
 import { GlassCard } from './GlassCard';
 import { AnimatedButton } from './AnimatedButton';
@@ -20,8 +20,9 @@ interface ShareModalProps {
 export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProps) {
   const [screenshot, setScreenshot] = useState<string | null>(null);
   const [isCapturing, setIsCapturing] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [shareSuccess, setShareSuccess] = useState<string | null>(null);
   const [showConfetti, setShowConfetti] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   const testUrl = 'https://skillscan-ai.netlify.app';
@@ -41,7 +42,66 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
 
 #AISkills #ProfessionalDevelopment #SkillScanAI #ArtificialIntelligence #CareerGrowth #TechSkills #AIReadiness`;
 
+  // Platform-specific share texts
+  const platformTexts = {
+    linkedin: `🎯 Just earned my AI Skills Certificate with ${result.percentage}% score!
+
+🏆 I completed the SkillScan AI assessment and gained valuable insights into my AI readiness. The personalized recommendations are helping me level up my skills in this rapidly evolving field.
+
+📊 My Results:
+• Overall Score: ${result.percentage}% (${result.score}/${result.totalQuestions} correct)
+• Key Strengths: ${result.strengths.slice(0, 2).join(', ') || 'Building strong foundations'}
+
+💡 As AI transforms every industry, staying ahead of the curve is crucial. This assessment helped me identify exactly where to focus my learning journey.
+
+🚀 Ready to test your AI knowledge? Try SkillScan AI: ${testUrl}
+
+#AISkills #ProfessionalDevelopment #SkillScanAI #ArtificialIntelligence #CareerGrowth`,
+
+    twitter: `🎯 Just earned my AI Skills Certificate with ${result.percentage}% score! 🏆
+
+Completed @SkillScanAI assessment - gained valuable insights into my AI readiness.
+
+📊 Score: ${result.percentage}% (${result.score}/${result.totalQuestions} correct)
+💪 Strengths: ${result.strengths.slice(0, 1).join(', ') || 'Building foundations'}
+
+🚀 Test your AI knowledge: ${testUrl}
+
+#AISkills #SkillScanAI #AI`,
+
+    whatsapp: `🎯 Hey! Just earned my AI Skills Certificate with ${result.percentage}% score! 🏆
+
+I completed the SkillScan AI assessment and it's amazing - got personalized insights into my AI readiness.
+
+My Results:
+• Score: ${result.percentage}% (${result.score}/${result.totalQuestions} correct)
+• Strengths: ${result.strengths.slice(0, 2).join(', ') || 'Building strong foundations'}
+
+You should try it too! It really helps identify where to focus your AI learning journey.
+
+Check it out: ${testUrl}`,
+
+    facebook: shareText,
+    instagram: `🎯 Just earned my AI Skills Certificate with ${result.percentage}% score! 🏆
+
+Completed the SkillScan AI assessment and gained valuable insights into my AI readiness.
+
+Score: ${result.percentage}% (${result.score}/${result.totalQuestions} correct)
+Strengths: ${result.strengths.slice(0, 2).join(', ') || 'Building strong foundations'}
+
+Ready to test your AI knowledge? Try SkillScan AI: ${testUrl}
+
+#AISkills #SkillScanAI #AI #ProfessionalDevelopment`,
+
+    email: `Subject: My AI Skills Assessment Results - ${result.percentage}% Score!
+
+${shareText}`
+  };
+
   useEffect(() => {
+    // Detect if user is on mobile
+    setIsMobile(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    
     if (isOpen) {
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
@@ -159,80 +219,148 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
       // Convert screenshot to blob
       const response = await fetch(screenshot);
       const blob = await response.blob();
-      
-      // Create a file from the blob
       const file = new File([blob], `skillscan-ai-certificate-${result.percentage}percent.png`, { type: 'image/png' });
+      
+      const platformText = platformTexts[platform as keyof typeof platformTexts] || shareText;
 
-      // Check if Web Share API is supported and can share files
+      // Try Web Share API first (works best on mobile)
       if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
         try {
           await navigator.share({
             title: `My AI Skills Certificate - ${result.percentage}% Score`,
-            text: shareText,
+            text: platformText,
             files: [file]
           });
+          setShareSuccess(`Successfully shared to ${platform}!`);
+          setTimeout(() => setShareSuccess(null), 3000);
           return;
         } catch (shareError) {
-          console.log('Web Share API failed, falling back to platform-specific sharing');
+          if (shareError instanceof Error && shareError.name !== 'AbortError') {
+            console.log('Web Share API failed, trying platform-specific approach');
+          } else {
+            return; // User cancelled
+          }
         }
       }
 
-      // Fallback: Copy image to clipboard and open platform
-      try {
-        await navigator.clipboard.write([
-          new ClipboardItem({
-            'image/png': blob,
-            'text/plain': new Blob([shareText], { type: 'text/plain' })
-          })
-        ]);
-        
-        // Show success message
-        setCopied(true);
-        setTimeout(() => setCopied(false), 3000);
-        
-        // Platform-specific instructions
-        const instructions = {
-          linkedin: '✅ Certificate and text copied! Open LinkedIn, create a new post, and paste both the image and text.',
-          twitter: '✅ Certificate and text copied! Open Twitter, create a new tweet, and paste both the image and text.',
-          facebook: '✅ Certificate and text copied! Open Facebook, create a new post, and paste both the image and text.',
-          whatsapp: '✅ Certificate and text copied! Open WhatsApp, select a chat or status, and paste both the image and text.',
-          instagram: '✅ Certificate and text copied! Open Instagram, create a new post or story, and paste the image with your caption.',
-          email: '✅ Certificate and text copied! Open your email app and paste both the image and text.'
-        };
-        
-        alert(instructions[platform as keyof typeof instructions] || '✅ Certificate and text copied to clipboard!');
-        
-      } catch (clipboardError) {
-        // If clipboard fails, just download the image and copy text
-        downloadScreenshot();
-        await navigator.clipboard.writeText(shareText);
-        alert('📥 Certificate downloaded and text copied! Upload the image manually to your social media platform.');
+      // Platform-specific sharing approaches
+      switch (platform) {
+        case 'linkedin':
+          // Copy content to clipboard
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          
+          // Open LinkedIn sharing interface
+          const linkedinUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(testUrl)}`;
+          window.open(linkedinUrl, '_blank', 'width=600,height=600');
+          
+          setShareSuccess('📋 Content copied! Paste in the LinkedIn post that just opened.');
+          break;
+
+        case 'twitter':
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          
+          const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(platformText)}`;
+          window.open(twitterUrl, '_blank', 'width=600,height=400');
+          
+          setShareSuccess('📋 Content copied! Add the image to the tweet that just opened.');
+          break;
+
+        case 'whatsapp':
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          
+          if (isMobile) {
+            // On mobile, try to open WhatsApp app
+            window.open(`whatsapp://send?text=${encodeURIComponent(platformText)}`, '_blank');
+          } else {
+            // On desktop, open WhatsApp Web
+            window.open('https://web.whatsapp.com/', '_blank');
+          }
+          
+          setShareSuccess('📋 Content copied! Paste in WhatsApp chat and add the image.');
+          break;
+
+        case 'facebook':
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          
+          const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(testUrl)}`;
+          window.open(facebookUrl, '_blank', 'width=600,height=600');
+          
+          setShareSuccess('📋 Content copied! Paste in the Facebook post that just opened.');
+          break;
+
+        case 'instagram':
+          // Instagram doesn't support direct web sharing, so we'll copy and give instructions
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          
+          if (isMobile) {
+            // Try to open Instagram app
+            window.open('instagram://camera', '_blank');
+          } else {
+            window.open('https://www.instagram.com/', '_blank');
+          }
+          
+          setShareSuccess('📋 Content copied! Create a new Instagram post and paste the image and caption.');
+          break;
+
+        case 'email':
+          await navigator.clipboard.writeText(platformText);
+          
+          const emailUrl = `mailto:?subject=${encodeURIComponent('My AI Skills Assessment Results')}&body=${encodeURIComponent(platformText)}`;
+          window.open(emailUrl, '_blank');
+          
+          setShareSuccess('📧 Email opened with content! Download and attach the certificate image.');
+          break;
+
+        default:
+          // Fallback: copy to clipboard
+          await navigator.clipboard.write([
+            new ClipboardItem({
+              'image/png': blob,
+              'text/plain': new Blob([platformText], { type: 'text/plain' })
+            })
+          ]);
+          setShareSuccess('📋 Content copied to clipboard!');
       }
-      
-      // Open the respective platform
-      const urls = {
-        linkedin: 'https://www.linkedin.com/feed/',
-        twitter: 'https://twitter.com/compose/tweet',
-        facebook: 'https://www.facebook.com/',
-        whatsapp: 'https://web.whatsapp.com/',
-        instagram: 'https://www.instagram.com/',
-        email: 'mailto:'
-      };
-      
-      if (urls[platform as keyof typeof urls]) {
-        window.open(urls[platform as keyof typeof urls], '_blank');
-      }
+
+      setTimeout(() => setShareSuccess(null), 5000);
       
     } catch (error) {
       console.error('Sharing failed:', error);
-      // Final fallback - just download and copy text
+      
+      // Final fallback - download image and copy text
       downloadScreenshot();
       try {
-        await navigator.clipboard.writeText(shareText);
-        alert('📥 Certificate downloaded and text copied! Please upload the image manually to your social media platform.');
+        await navigator.clipboard.writeText(platformText);
+        setShareSuccess('📥 Certificate downloaded and text copied! Upload manually to your platform.');
       } catch {
-        alert('📥 Certificate downloaded! Please copy the text manually and upload both to your social media platform.');
+        setShareSuccess('📥 Certificate downloaded! Please copy text and upload manually.');
       }
+      setTimeout(() => setShareSuccess(null), 5000);
     }
   };
 
@@ -240,8 +368,8 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
     try {
       const textToCopy = text || shareText;
       await navigator.clipboard.writeText(textToCopy);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setShareSuccess('📋 Text copied to clipboard!');
+      setTimeout(() => setShareSuccess(null), 2000);
     } catch (error) {
       console.error('Failed to copy to clipboard:', error);
     }
@@ -328,7 +456,10 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold text-white">Share Your Achievement</h2>
-                  <p className="text-gray-300 text-sm">Your AI skills certificate is ready to share</p>
+                  <p className="text-gray-300 text-sm flex items-center gap-1">
+                    {isMobile && <Smartphone className="w-4 h-4" />}
+                    Your AI skills certificate is ready to share
+                  </p>
                 </div>
               </motion.div>
               <button
@@ -450,14 +581,17 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
               </div>
               <div className="mt-3 text-center">
                 <p className="text-gray-400 text-xs">
-                  💡 Tip: Click to share both your certificate image and achievement text together!
+                  {isMobile 
+                    ? '📱 Mobile: Native sharing available! Desktop: Content copied for easy pasting.'
+                    : '💻 Click to open platform and copy content for easy pasting!'
+                  }
                 </p>
               </div>
             </motion.div>
 
             {/* Success Message */}
             <AnimatePresence>
-              {copied && (
+              {shareSuccess && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -467,7 +601,7 @@ export function ShareModal({ isOpen, onClose, result, userName }: ShareModalProp
                   <div className="bg-green-500/20 border border-green-500/30 rounded-xl p-3 text-center">
                     <div className="flex items-center justify-center gap-2 text-green-300">
                       <Check className="w-5 h-5" />
-                      <span className="font-medium">Ready to share! Certificate and text copied to clipboard.</span>
+                      <span className="font-medium">{shareSuccess}</span>
                     </div>
                   </div>
                 </motion.div>
