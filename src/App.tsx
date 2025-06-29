@@ -6,6 +6,7 @@ import { LoginPage } from './pages/LoginPage';
 import { TestSelectionPage } from './pages/TestSelectionPage';
 import { TestPage } from './pages/TestPage';
 import { ResultsPage } from './pages/ResultsPage';
+import { SharePage } from './pages/SharePage';
 import { LearningPage } from './pages/LearningPage';
 import { LearningTopicPage } from './pages/LearningTopicPage';
 
@@ -89,6 +90,10 @@ function AppContent() {
                 <Navigate to="/test-selection" replace />
               )
             } 
+          />
+          <Route 
+            path="/share/:resultData" 
+            element={<SharePage />} 
           />
           <Route 
             path="/learning" 
